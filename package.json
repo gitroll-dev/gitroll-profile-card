@@ -1,6 +1,5 @@
 {
-  "name": "gitroll-profile-card",
-  "private": true,
+  "name": "@gitroll/profile-card",
   "version": "0.0.0",
   "type": "module",
   "exports": {
@@ -10,6 +9,9 @@
       "require": "./dist/index.cjs.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

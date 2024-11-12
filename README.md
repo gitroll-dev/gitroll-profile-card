@@ -1,6 +1,6 @@
 # GitRoll Profile Card
 
-We now have 7 themes to choose from! 🎉
+We now have 7 preset themes to choose from! 🎉
 
 - `light` (the default one)
 - `dark`
@@ -10,7 +10,7 @@ We now have 7 themes to choose from! 🎉
 - `tokyoNight`
 - `nord`
 
-To use a theme, simply add the `theme` query parameter to the image URL.
+To use a preset theme, simply add the `theme` query parameter to the image URL.
 
 ## Contributing
 
