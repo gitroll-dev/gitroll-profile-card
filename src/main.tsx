@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 import satori from 'satori'
 import { OGCard } from './OGCard'
 import { Rating } from './rating'
-import { preset } from './theme'
+import { preset, type Theme } from './theme'
 
 
 const InputGroup = ({ children }: { children: React.ReactNode }) => <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>{children}</div>
@@ -32,9 +32,56 @@ async function loadFont() {
   return await fontResponse.arrayBuffer()
 }
 
+const ColorInput = ({ value, onChange }: { label: string; value: string; onChange: (value: string) => void }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <input
+      type="color"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      style={{
+        width: '40px',
+        height: '40px',
+        padding: '0',
+        border: '1px solid #ddd',
+        borderRadius: '4px',
+        cursor: 'pointer',
+      }}
+    />
+    <input type="text" value={value} onChange={(e) => onChange(e.target.value)} style={{ ...inputStyle, flex: 1 }} />
+  </div>
+)
+
 function App() {
   const [, setSvg] = useState<string>('')
   const [svgDataUrl, setSvgDataUrl] = useState<string>('')
+  const [isCustomTheme, setIsCustomTheme] = useState(false)
+  const [customTheme, setCustomTheme] = useState<Theme>({
+    backgroundColor: '#ffffff',
+    textColor: '#000000',
+    textColorSecondary: 'rgba(0, 0, 0, 0.6)',
+    badgeColors: {
+      [Rating.S]: '#c4b5fd',
+      [Rating.A]: '#bbf7d0',
+      [Rating.B]: '#d9f99d',
+      [Rating.C]: '#fef08a',
+      [Rating.D]: '#fed7aa',
+      [Rating.E]: '#fecaca',
+    },
+    badgeTextColors: {
+      [Rating.S]: '#000000',
+      [Rating.A]: '#000000',
+      [Rating.B]: '#000000',
+      [Rating.C]: '#000000',
+      [Rating.D]: '#000000',
+      [Rating.E]: '#000000',
+    },
+    barBackground: '#F4F4F5',
+    barForeground: '#18181B',
+    borderColor: '#E4E4E7',
+    avatarPlaceholderColor: '#9ca3af',
+    logoColor: '#030303',
+  })
+
   const [props, setProps] = useState({
     user: 'GitHub Username',
     avatar: 'https://avatars.githubusercontent.com/u/9919?s=200&v=4',
@@ -114,7 +161,7 @@ function App() {
         <div
           style={{
             background: 'white',
-            padding: '2rem',
+            padding: '1rem',
             borderRadius: '12px',
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
           }}
@@ -284,8 +331,17 @@ function App() {
             <InputGroup>
               <label>Theme</label>
               <select
-                value={Object.entries(preset).find(([, v]) => v === props.theme)?.[0] || 'light'}
-                onChange={(e) => handleInputChange('theme', preset[e.target.value as keyof typeof preset])}
+                value={isCustomTheme ? 'custom' : Object.entries(preset).find(([, v]) => v === props.theme)?.[0] || 'light'}
+                onChange={(e) => {
+                  const themeName = e.target.value
+                  if (themeName === 'custom') {
+                    setIsCustomTheme(true)
+                    handleInputChange('theme', customTheme)
+                  } else {
+                    setIsCustomTheme(false)
+                    handleInputChange('theme', preset[themeName as keyof typeof preset])
+                  }
+                }}
                 style={selectStyle}
               >
                 {Object.keys(preset).map((themeName) => (
@@ -293,6 +349,7 @@ function App() {
                     {themeName.charAt(0).toUpperCase() + themeName.slice(1)}
                   </option>
                 ))}
+                <option value="custom">Custom</option>
               </select>
             </InputGroup>
 
@@ -309,6 +366,156 @@ function App() {
                 }}
               />
             </InputGroup>
+
+            {isCustomTheme && (
+              <>
+                <InputGroup>
+                  <label>Background Color</label>
+                  <ColorInput
+                    label="Background"
+                    value={customTheme.backgroundColor}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, backgroundColor: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label>Text Color</label>
+                  <ColorInput
+                    label="Text"
+                    value={customTheme.textColor}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, textColor: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label>Secondary Text Color</label>
+                  <ColorInput
+                    label="Secondary Text"
+                    value={customTheme.textColorSecondary}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, textColorSecondary: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label>Bar Background</label>
+                  <ColorInput
+                    label="Bar Background"
+                    value={customTheme.barBackground}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, barBackground: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label>Bar Foreground</label>
+                  <ColorInput
+                    label="Bar Foreground"
+                    value={customTheme.barForeground}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, barForeground: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label>Border Color</label>
+                  <ColorInput
+                    label="Border"
+                    value={customTheme.borderColor}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, borderColor: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label>Avatar Placeholder Color</label>
+                  <ColorInput
+                    label="Avatar Placeholder"
+                    value={customTheme.avatarPlaceholderColor}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, avatarPlaceholderColor: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label>Logo Color</label>
+                  <ColorInput
+                    label="Logo"
+                    value={customTheme.logoColor}
+                    onChange={(value) => {
+                      const updatedTheme = { ...customTheme, logoColor: value }
+                      setCustomTheme(updatedTheme)
+                      handleInputChange('theme', updatedTheme)
+                    }}
+                  />
+                </InputGroup>
+
+                {Object.values(Rating).map((rating) => (
+                  <React.Fragment key={rating}>
+                    <InputGroup>
+                      <label>{`${rating} Badge Color`}</label>
+                      <ColorInput
+                        label={`Badge ${rating}`}
+                        value={customTheme.badgeColors[rating]}
+                        onChange={(value) => {
+                          const updatedTheme = {
+                            ...customTheme,
+                            badgeColors: {
+                              ...customTheme.badgeColors,
+                              [rating]: value,
+                            },
+                          }
+                          setCustomTheme(updatedTheme)
+                          handleInputChange('theme', updatedTheme)
+                        }}
+                      />
+                    </InputGroup>
+
+                    <InputGroup>
+                      <label>{`${rating} Badge Text Color`}</label>
+                      <ColorInput
+                        label={`Badge Text ${rating}`}
+                        value={customTheme.badgeTextColors[rating]}
+                        onChange={(value) => {
+                          const updatedTheme = {
+                            ...customTheme,
+                            badgeTextColors: {
+                              ...customTheme.badgeTextColors,
+                              [rating]: value,
+                            },
+                          }
+                          setCustomTheme(updatedTheme)
+                          handleInputChange('theme', updatedTheme)
+                        }}
+                      />
+                    </InputGroup>
+                  </React.Fragment>
+                ))}
+              </>
+            )}
           </div>
         </div>
 
