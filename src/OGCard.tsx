@@ -30,6 +30,7 @@ export function OGCard({
   const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E]
   return (
     <div
+      id='card-container'
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -48,19 +49,19 @@ export function OGCard({
         gap: 24
       }}>
         {avatar
-          ? <img src={avatar} alt='' width={100} height={100} style={{ borderRadius: 1000 }} />
-          : <div style={{ width: 100, height: 100, borderRadius: 1000, backgroundColor: theme.avatarPlaceholderColor }}></div>
+          ? <img id='user-avatar' src={avatar} alt='' width={100} height={100} style={{ borderRadius: 1000 }} />
+          : <div id='user-avatar' style={{ width: 100, height: 100, borderRadius: 1000, backgroundColor: theme.avatarPlaceholderColor }}></div>
         }
         <div style={{
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <div style={{
+          <div id='user-name' style={{
             fontSize: 52,
             lineHeight: 0.8,
             marginTop: 16
           }}>{user}</div>
-          <p style={{
+          <p id='user-type' style={{
             fontSize: 32,
             color: theme.textColorSecondary
           }}>{devType}</p>
@@ -72,23 +73,30 @@ export function OGCard({
         marginTop: 16,
         gap: 64
       }}>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 8,
-          width: 250
-        }}>
-          <div style={{
-            fontSize: 36
+        <div 
+          id='overall-score-section'
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            width: 250
           }}>
+          <div 
+            id='overall-rating-label'
+            style={{
+              fontSize: 36
+            }}>
             Overall Rating
           </div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 16
-          }}>
+          <div 
+            id='overall-score-container'
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16
+            }}>
             <div
+              id='overall-rating-badge'
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -100,6 +108,7 @@ export function OGCard({
               }}
             >
               <div
+                id='overall-rating'
                 style={{
                   fontSize: 56,
                   fontWeight: 700,
@@ -109,42 +118,52 @@ export function OGCard({
                 {overallRating}
               </div>
             </div>
-            <div style={{
-              fontSize: 60
-            }}>
+            <div 
+              id='overall-score'
+              style={{
+                fontSize: 60
+              }}>
               {overallScore}
             </div>
           </div>
-          <div style={{
-            fontSize: 28,
-            display: 'flex'
-          }}>
+          <div 
+            id='overall-percentile'
+            style={{
+              fontSize: 28,
+              display: 'flex'
+            }}>
             <span style={{ opacity: 0.6 }}>Above</span>
-            <span style={{ marginLeft: 24, marginRight: 16 }}>{overallScoreCDF}%</span>
+            <span id='overall-percentile-value' style={{ marginLeft: 24, marginRight: 16 }}>{overallScoreCDF}%</span>
             <span style={{ opacity: 0.6 }}> of people</span>
           </div>
         </div>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 8
-        }}>
-          <div style={{
-            fontSize: 36
+        <div 
+          id='code-quality-section'
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8
           }}>
+          <div 
+            id='code-quality-label'
+            style={{
+              fontSize: 36
+            }}>
             Code Quality
           </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 16,
-          }}>
+          <div 
+            id='reliability-score'
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 16,
+            }}>
             <div style={{
               fontSize: 28,
               width: 180
             }}>Reliability</div>
-            <div style={{
+            <div className='bar-background' style={{
               display: 'flex',
               backgroundColor: theme.barBackground,
               width: 480,
@@ -152,27 +171,30 @@ export function OGCard({
               borderRadius: 100,
               position: 'relative'
             }}>
-              <div style={{
+              <div className='bar-foreground' style={{
                 backgroundColor: theme.barForeground,
                 width: reliabilityScore * 480 / 5,
                 height: 24,
                 position: 'absolute',
-                borderRadius: 100
-              }}>
+                borderRadius: 100,
+                '--final-width': `${maintainabilityScore * 480 / 5}px`
+              } as React.CSSProperties}>
               </div>
             </div>
           </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 16,
-          }}>
+          <div 
+            id='security-score'
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 16,
+            }}>
             <div style={{
               fontSize: 28,
               width: 180
             }}>Security</div>
-            <div style={{
+            <div className='bar-background' style={{
               display: 'flex',
               backgroundColor: theme.barBackground,
               width: 480,
@@ -180,27 +202,30 @@ export function OGCard({
               borderRadius: 100,
               position: 'relative'
             }}>
-              <div style={{
+              <div className='bar-foreground' style={{
                 backgroundColor: theme.barForeground,
                 width: securityScore * 480 / 5,
                 height: 24,
                 position: 'absolute',
-                borderRadius: 100
-              }}>
+                borderRadius: 100,
+                '--final-width': `${securityScore * 480 / 5}px`
+              } as React.CSSProperties}>
               </div>
             </div>
           </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 16,
-          }}>
+          <div 
+            id='maintainability-score'
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 16,
+            }}>
             <div style={{
               fontSize: 28,
               width: 180
             }}>Maintainab.</div>
-            <div style={{
+            <div className='bar-background' style={{
               display: 'flex',
               backgroundColor: theme.barBackground,
               width: 480,
@@ -208,57 +233,69 @@ export function OGCard({
               borderRadius: 100,
               position: 'relative'
             }}>
-              <div style={{
+              <div className='bar-foreground' style={{
                 backgroundColor: theme.barForeground,
                 width: maintainabilityScore * 480 / 5,
                 height: 24,
                 position: 'absolute',
-                borderRadius: 100
-              }}>
+                borderRadius: 100,
+                '--final-width': `${maintainabilityScore * 480 / 5}px`
+              } as React.CSSProperties}>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: 0,
-        gap: 16
-      }}>
+      <div 
+        id='badges-section'
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          marginTop: 0,
+          gap: 16
+        }}>
         {contributor &&
-          <div style={{
-            borderWidth: '1px',
-            borderColor: theme.borderColor,
-            borderRadius: 8,
-            padding: '4px 16px',
-            fontSize: 24
-          }}>
+          <div 
+            id='contributor-badge'
+            className='badge'
+            style={{
+              borderWidth: '1px',
+              borderColor: theme.borderColor,
+              borderRadius: 8,
+              padding: '4px 16px',
+              fontSize: 24
+            }}>
             Open-source contributor
           </div>
         }
         {regionalRank &&
-          <div style={{
-            borderWidth: '1px',
-            borderColor: theme.borderColor,
-            borderRadius: 8,
-            padding: '4px 16px',
-            fontSize: 24,
-            display: 'flex',
-            flexDirection: 'row'
-          }}>
+          <div 
+            id='regional-rank-badge'
+            className='badge'
+            style={{
+              borderWidth: '1px',
+              borderColor: theme.borderColor,
+              borderRadius: 8,
+              padding: '4px 16px',
+              fontSize: 24,
+              display: 'flex',
+              flexDirection: 'row'
+            }}>
             Top {regionalRank[0]}% in {regionalRank[1]}
           </div>}
         {campusRank &&
-          <div style={{
-            borderWidth: '1px',
-            borderColor: theme.borderColor,
-            borderRadius: 8,
-            padding: '4px 16px',
-            fontSize: 24,
-            display: 'flex',
-            flexDirection: 'row'
-          }}>
+          <div 
+            id='campus-rank-badge'
+            className='badge'
+            style={{
+              borderWidth: '1px',
+              borderColor: theme.borderColor,
+              borderRadius: 8,
+              padding: '4px 16px',
+              fontSize: 24,
+              display: 'flex',
+              flexDirection: 'row'
+            }}>
             Top {campusRank[0]}% in {campusRank[1]}
           </div>}
       </div>

@@ -38,7 +38,7 @@ const light = {
   barForeground: '#18181B',
   borderColor: '#E4E4E7',
   avatarPlaceholderColor: '#9ca3af',
-  logoColor: '#030303'
+  logoColor: '#030303',
 }
 
 const dark = {
@@ -65,7 +65,7 @@ const dark = {
   barForeground: '#fff',
   borderColor: '#27272A',
   avatarPlaceholderColor: '#52525B',
-  logoColor: '#fff'
+  logoColor: '#fff',
 }
 
 const sepia = {
@@ -92,7 +92,7 @@ const sepia = {
   barForeground: '#5b4636',
   borderColor: '#c2b280',
   avatarPlaceholderColor: '#b4a078',
-  logoColor: '#5b4636'
+  logoColor: '#5b4636',
 }
 
 const solarizedLight = {
@@ -119,7 +119,7 @@ const solarizedLight = {
   barForeground: '#073642',
   borderColor: '#93a1a1',
   avatarPlaceholderColor: '#93a1a1',
-  logoColor: '#657b83'
+  logoColor: '#657b83',
 }
 
 const solarizedDark = {
@@ -146,7 +146,7 @@ const solarizedDark = {
   barForeground: '#fdf6e3',
   borderColor: '#586e75',
   avatarPlaceholderColor: '#586e75',
-  logoColor: '#839496'
+  logoColor: '#839496',
 }
 
 const tokyoNight = {
@@ -173,7 +173,7 @@ const tokyoNight = {
   barForeground: '#c0caf5',
   borderColor: '#3b4261',
   avatarPlaceholderColor: '#565f89',
-  logoColor: '#c0caf5'
+  logoColor: '#c0caf5',
 }
 
 const nord = {
@@ -200,15 +200,15 @@ const nord = {
   barForeground: '#d8dee9',
   borderColor: '#4c566a',
   avatarPlaceholderColor: '#434c5e',
-  logoColor: '#d8dee9'
+  logoColor: '#d8dee9',
 }
 
-export const preset = {
+export const preset: Record<string, Theme> = {
   light,
   dark,
   sepia,
   solarizedLight,
   solarizedDark,
   tokyoNight,
-  nord
-} satisfies Record<string, Theme>
+  nord,
+}

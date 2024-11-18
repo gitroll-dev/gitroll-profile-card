@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input, select {
+  font-family: inherit;
+}
+
+label {
+  font-weight: 500;
+  color: #4a4a4a;
+}
+
+input:focus, select:focus {
+  border-color: #0066ff !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,102,255,0.1);
+} 
