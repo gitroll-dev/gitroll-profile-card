@@ -28,7 +28,7 @@ const selectStyle = {
 }
 
 async function loadFont() {
-  const fontResponse = await fetch('/noto-sans-v27-latin-regular.ttf')
+  const fontResponse = await fetch(new URL('../noto-sans-v27-latin-regular.ttf', import.meta.url).href)
   return await fontResponse.arrayBuffer()
 }
 
