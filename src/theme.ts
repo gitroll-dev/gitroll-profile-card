@@ -237,5 +237,6 @@ export const preset: Record<string, Theme> = {
   solarizedLight,
   solarizedDark,
   tokyoNight,
+  nord
   midnight,
 }
