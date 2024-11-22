@@ -83,3 +83,11 @@ export const Nord: Story = {
     theme: preset.nord,
   },
 }
+
+export const Midnight: Story = {
+  args:{
+    ...baseProps,
+    theme: preset.midnight
+  }
+}
+

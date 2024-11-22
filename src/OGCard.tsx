@@ -38,7 +38,8 @@ export function OGCard({
         width: '100%',
         height: '100%',
         backgroundColor: theme.backgroundColor,
-        color: theme.textColor
+        color: theme.textColor,
+        borderRadius: '10px'
       }}>
       <GitRollLogo fill={theme.logoColor} />
       <div style={{
