@@ -1,0 +1,32 @@
+name: Release Package
+
+on:
+    push:
+        branches: ["main"]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+        permissions:
+            packages: write
+            contents: write
+            issues: write
+            pull-requests: write
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+              with:
+                  run_install: true
+            - run: pnpm build
+            - uses: changesets/action@v1
+              with:
+                  publish: pnpm changeset publish
+                  version: pnpm changeset version
+                  title: Release Packages
+                  commit: bump versions
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
