@@ -68,30 +68,35 @@ jobs:
 
             - name: Setup preview branch
               run: |
+                  # Create a temporary directory for the preview branch
+                  TEMP_DIR=$(mktemp -d)
+
+                  # Configure git
                   git config --global user.name 'github-actions[bot]'
                   git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-                  # Try to fetch the preview branch if it exists
-                  git fetch origin previews || true
-
-                  # Create or reset the preview branch
-                  if git rev-parse --verify origin/previews >/dev/null 2>&1; then
-                    git checkout previews
+                  # Clone only the preview branch to temp dir, or create new if doesn't exist
+                  if git ls-remote --heads origin previews | grep -q 'refs/heads/previews'; then
+                      git clone --branch previews --single-branch https://github.com/${{ github.repository }}.git "$TEMP_DIR"
                   else
-                    git checkout --orphan previews
-                    git rm -rf .
+                      git clone https://github.com/${{ github.repository }}.git "$TEMP_DIR"
+                      cd "$TEMP_DIR"
+                      git checkout --orphan previews
+                      git rm -rf .
+                      git clean -fxd
                   fi
 
-                  # Create previews directory if it doesn't exist
+                  # Setup the preview branch
+                  cd "$TEMP_DIR"
                   mkdir -p previews
 
-                  # Move the preview image to previews directory with PR number
-                  cp preview.png "previews/pr-${{ github.event.pull_request.number }}.png"
+                  # Copy the new preview
+                  cp "${{ github.workspace }}/preview.png" "previews/pr-${{ github.event.pull_request.number }}.png"
 
-                  # Stage and commit
+                  # Commit and push
                   git add previews/
-                  git commit -m "Update preview for PR #${{ github.event.pull_request.number }}"
-                  git push origin previews
+                  git commit -m "Update preview for PR #${{ github.event.pull_request.number }}" || echo "No changes to commit"
+                  git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git previews
 
             - name: Get comment body
               id: get-comment-body
