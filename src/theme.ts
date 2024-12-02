@@ -231,30 +231,30 @@ const midnight = {
 }
 
 const cyberpunk = {
-  backgroundColor: '#0D0221',
-  textColor: '#FF71CE',
-  textColorSecondary: 'rgba(255, 113, 206, 0.7)',
+  backgroundColor: '#FFFAE3',
+  textColor: '#7209B7',
+  textColorSecondary: 'rgba(114, 9, 183, 0.7)',
   badgeColors: {
-    [Rating.S]: '#B967FF', // Neon purple
-    [Rating.A]: '#01FFC3', // Neon cyan
-    [Rating.B]: '#FFE502', // Neon yellow
-    [Rating.C]: '#01FFFF', // Bright cyan
-    [Rating.D]: '#FF6B6B', // Neon red
-    [Rating.E]: '#FF2975'  // Hot pink
+    [Rating.S]: '#B967FF',
+    [Rating.A]: '#00B4D8',
+    [Rating.B]: '#F72585',
+    [Rating.C]: '#4CC9F0',
+    [Rating.D]: '#7209B7',
+    [Rating.E]: '#3A0CA3'
   },
   badgeTextColors: {
-    [Rating.S]: '#0D0221',
-    [Rating.A]: '#0D0221',
-    [Rating.B]: '#0D0221',
-    [Rating.C]: '#0D0221',
-    [Rating.D]: '#0D0221',
-    [Rating.E]: '#0D0221'
+    [Rating.S]: '#FFFAE3',
+    [Rating.A]: '#FFFAE3',
+    [Rating.B]: '#FFFAE3',
+    [Rating.C]: '#FFFAE3',
+    [Rating.D]: '#FFFAE3',
+    [Rating.E]: '#FFFAE3'
   },
-  barBackground: '#1A1147',
-  barForeground: '#01FFC3',
+  barBackground: '#FFE5D9',
+  barForeground: '#7209B7',
   borderColor: '#B967FF',
   avatarPlaceholderColor: '#7D12FF',
-  logoColor: '#FF71CE',
+  logoColor: '#7209B7',
 }
 
 export const preset: Record<string, Theme> = {
