@@ -9,6 +9,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             pull-requests: write
+            contents: write
 
         steps:
             - name: Checkout PR Branch
@@ -65,15 +66,39 @@ jobs:
                       exit 1
                   }
 
-            - name: Upload preview as artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: preview.png
-                  path: preview.png
+            - name: Setup preview branch
+              run: |
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+                  # Try to fetch the preview branch if it exists
+                  git fetch origin previews || true
+
+                  # Create or reset the preview branch
+                  if git rev-parse --verify origin/previews >/dev/null 2>&1; then
+                    git checkout previews
+                  else
+                    git checkout --orphan previews
+                    git rm -rf .
+                  fi
+
+                  # Create previews directory if it doesn't exist
+                  mkdir -p previews
+
+                  # Move the preview image to previews directory with PR number
+                  cp preview.png "previews/pr-${{ github.event.pull_request.number }}.png"
+
+                  # Stage and commit
+                  git add previews/
+                  git commit -m "Update preview for PR #${{ github.event.pull_request.number }}"
+                  git push origin previews
 
             - name: Get comment body
               id: get-comment-body
               run: |
+                  # Use raw GitHub URL for the image
+                  IMAGE_URL="https://raw.githubusercontent.com/${{ github.repository }}/previews/previews/pr-${{ github.event.pull_request.number }}.png"
+
                   echo "body<<EOF" >> $GITHUB_OUTPUT
                   echo "### GitRoll Preview Cards" >> $GITHUB_OUTPUT
                   echo "" >> $GITHUB_OUTPUT
@@ -83,7 +108,7 @@ jobs:
                       echo "No new theme detected, using: \`${{ steps.get-theme.outputs.theme }}\`" >> $GITHUB_OUTPUT
                   fi
                   echo "" >> $GITHUB_OUTPUT
-                  echo "![Preview Cards](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts/preview.png)" >> $GITHUB_OUTPUT
+                  echo "![Preview Cards]($IMAGE_URL)" >> $GITHUB_OUTPUT
                   echo "" >> $GITHUB_OUTPUT
                   echo "These are preview cards showing possible ratings. Get your real score at GitRoll.io" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
