@@ -230,6 +230,33 @@ const midnight = {
   logoColor: '#ecf0f1'
 }
 
+const cyberpunk = {
+  backgroundColor: '#0D0221',
+  textColor: '#FF71CE',
+  textColorSecondary: 'rgba(255, 113, 206, 0.7)',
+  badgeColors: {
+    [Rating.S]: '#B967FF', // Neon purple
+    [Rating.A]: '#01FFC3', // Neon cyan
+    [Rating.B]: '#FFE502', // Neon yellow
+    [Rating.C]: '#01FFFF', // Bright cyan
+    [Rating.D]: '#FF6B6B', // Neon red
+    [Rating.E]: '#FF2975'  // Hot pink
+  },
+  badgeTextColors: {
+    [Rating.S]: '#0D0221',
+    [Rating.A]: '#0D0221',
+    [Rating.B]: '#0D0221',
+    [Rating.C]: '#0D0221',
+    [Rating.D]: '#0D0221',
+    [Rating.E]: '#0D0221'
+  },
+  barBackground: '#1A1147',
+  barForeground: '#01FFC3',
+  borderColor: '#B967FF',
+  avatarPlaceholderColor: '#7D12FF',
+  logoColor: '#FF71CE',
+}
+
 export const preset: Record<string, Theme> = {
   light,
   dark,
@@ -239,4 +266,5 @@ export const preset: Record<string, Theme> = {
   tokyoNight,
   nord,
   midnight,
+  cyberpunk,
 }
