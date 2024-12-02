@@ -90,19 +90,19 @@ jobs:
                   cd "$TEMP_DIR"
                   mkdir -p previews
 
-                  # Copy the new preview
-                  cp "${{ github.workspace }}/preview.png" "previews/pr-${{ github.event.pull_request.number }}.png"
+                  # Copy the new preview with PR number and commit SHA
+                  cp "${{ github.workspace }}/preview.png" "previews/pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}.png"
 
                   # Commit and push
                   git add previews/
-                  git commit -m "Update preview for PR #${{ github.event.pull_request.number }}" || echo "No changes to commit"
+                  git commit -m "Update preview for PR #${{ github.event.pull_request.number }} commit ${{ github.event.pull_request.head.sha }}" || echo "No changes to commit"
                   git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git previews
 
             - name: Get comment body
               id: get-comment-body
               run: |
-                  # Use raw GitHub URL for the image
-                  IMAGE_URL="https://raw.githubusercontent.com/${{ github.repository }}/previews/previews/pr-${{ github.event.pull_request.number }}.png"
+                  # Use raw GitHub URL for the image with commit SHA
+                  IMAGE_URL="https://raw.githubusercontent.com/${{ github.repository }}/previews/previews/pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}.png"
 
                   echo "body<<EOF" >> $GITHUB_OUTPUT
                   echo "### GitRoll Preview Cards" >> $GITHUB_OUTPUT
