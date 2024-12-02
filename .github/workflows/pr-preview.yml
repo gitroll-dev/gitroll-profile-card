@@ -1,0 +1,135 @@
+name: PR Preview
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+
+jobs:
+    preview:
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+            contents: write
+
+        steps:
+            - name: Checkout PR Branch
+              uses: actions/checkout@v4
+
+            - name: Checkout main branch
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+                  path: main-branch
+
+            - uses: pnpm/action-setup@v4
+              with:
+                  run_install: true
+
+            - name: Find new theme
+              id: get-theme
+              run: |
+                  # Extract themes from both branches
+                  PR_THEMES=$(pnpm tsx -e "import { preset } from './src/theme'; console.log(Object.keys(preset).join(','))")
+                  MAIN_THEMES=$(pnpm tsx -e "import { preset } from './main-branch/src/theme'; console.log(Object.keys(preset).join(','))")
+
+                  # Convert to arrays
+                  IFS=',' read -ra PR_ARRAY <<< "$PR_THEMES"
+                  IFS=',' read -ra MAIN_ARRAY <<< "$MAIN_THEMES"
+
+                  # Find new themes
+                  NEW_THEMES=()
+                  for theme in "${PR_ARRAY[@]}"; do
+                      if [[ ! " ${MAIN_ARRAY[@]} " =~ " ${theme} " ]]; then
+                          NEW_THEMES+=("$theme")
+                      fi
+                  done
+
+                  if [ ${#NEW_THEMES[@]} -eq 0 ]; then
+                      THEME="light"
+                      echo "No new theme found, using default: $THEME"
+                  else
+                      THEME="${NEW_THEMES[0]}"
+                      echo "New theme found: $THEME"
+                  fi
+
+                  echo "theme=$THEME" >> $GITHUB_OUTPUT
+
+                  # Store all new themes for the comment
+                  if [ ${#NEW_THEMES[@]} -gt 0 ]; then
+                      echo "new_themes=${NEW_THEMES[*]}" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Generate preview grid
+              run: |
+                  pnpm generate --grid --theme ${{ steps.get-theme.outputs.theme }} -o preview.png || {
+                      echo "::error::Failed to generate preview cards"
+                      exit 1
+                  }
+
+            - name: Setup preview branch
+              run: |
+                  # Create a temporary directory for the preview branch
+                  TEMP_DIR=$(mktemp -d)
+
+                  # Configure git
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+                  # Clone only the preview branch to temp dir, or create new if doesn't exist
+                  if git ls-remote --heads origin previews | grep -q 'refs/heads/previews'; then
+                      git clone --branch previews --single-branch https://github.com/${{ github.repository }}.git "$TEMP_DIR"
+                  else
+                      git clone https://github.com/${{ github.repository }}.git "$TEMP_DIR"
+                      cd "$TEMP_DIR"
+                      git checkout --orphan previews
+                      git rm -rf .
+                      git clean -fxd
+                  fi
+
+                  # Setup the preview branch
+                  cd "$TEMP_DIR"
+                  mkdir -p previews
+
+                  # Copy the new preview
+                  cp "${{ github.workspace }}/preview.png" "previews/pr-${{ github.event.pull_request.number }}.png"
+
+                  # Commit and push
+                  git add previews/
+                  git commit -m "Update preview for PR #${{ github.event.pull_request.number }}" || echo "No changes to commit"
+                  git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git previews
+
+            - name: Get comment body
+              id: get-comment-body
+              run: |
+                  # Use raw GitHub URL for the image
+                  IMAGE_URL="https://raw.githubusercontent.com/${{ github.repository }}/previews/previews/pr-${{ github.event.pull_request.number }}.png"
+
+                  echo "body<<EOF" >> $GITHUB_OUTPUT
+                  echo "### GitRoll Preview Cards" >> $GITHUB_OUTPUT
+                  echo "" >> $GITHUB_OUTPUT
+                  if [[ -n "${{ steps.get-theme.outputs.new_themes }}" ]]; then
+                      echo "New theme(s) detected: \`${{ steps.get-theme.outputs.new_themes }}\`" >> $GITHUB_OUTPUT
+                  else
+                      echo "No new theme detected, using: \`${{ steps.get-theme.outputs.theme }}\`" >> $GITHUB_OUTPUT
+                  fi
+                  echo "" >> $GITHUB_OUTPUT
+                  echo "![Preview Cards]($IMAGE_URL)" >> $GITHUB_OUTPUT
+                  echo "" >> $GITHUB_OUTPUT
+                  echo "These are preview cards showing possible ratings. Get your real score at [GitRoll.io](https://gitroll.io)" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Find Comment
+              uses: peter-evans/find-comment@v3
+              id: find-comment
+              with:
+                  issue-number: ${{ github.event.pull_request.number }}
+                  comment-author: "github-actions[bot]"
+                  body-includes: "### GitRoll Preview Cards"
+
+            - name: Create or update comment
+              uses: peter-evans/create-or-update-comment@v4
+              with:
+                  comment-id: ${{ steps.find-comment.outputs.comment-id }}
+                  issue-number: ${{ github.event.pull_request.number }}
+                  body: ${{ steps.get-comment-body.outputs.body }}
+                  edit-mode: replace
