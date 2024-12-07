@@ -16,7 +16,7 @@ export function KawaiiDecorations({ color }: KawaiiDecorationsProps) {
         overflow: 'visible',
       }}
     >
-      <g opacity='0.8'>
+      <g opacity='0.9'>
         {/* Paw prints trail across bottom & top */}
         {[200, 400, 600, 800, 1000].map((x, i) => (
           <g key={i} transform={`translate(${x}, 60) scale(0.3)`}>
