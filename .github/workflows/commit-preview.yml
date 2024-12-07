@@ -42,6 +42,10 @@ jobs:
                   git config --global user.name 'github-actions[bot]'
                   git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+                  # Create a temporary directory for git operations
+                  mkdir -p temp_git
+                  cd temp_git
+
                   # Clone only the preview branch, or create new if doesn't exist
                   if git ls-remote --heads origin previews | grep -q 'refs/heads/previews'; then
                       git clone --branch previews --single-branch https://github.com/${{ github.repository }}.git .
@@ -55,8 +59,8 @@ jobs:
                   # Setup the preview branch
                   mkdir -p previews
 
-                  # Copy the new preview with PR number and commit SHA
-                  cp preview.png "previews/pr-${{ steps.pr-info.outputs.pr_number }}-${{ steps.pr-info.outputs.commit_sha }}.png"
+                  # Copy the new preview with PR number and commit SHA from parent directory
+                  cp ../preview.png "previews/pr-${{ steps.pr-info.outputs.pr_number }}-${{ steps.pr-info.outputs.commit_sha }}.png"
 
                   # Commit and push
                   git add previews/
