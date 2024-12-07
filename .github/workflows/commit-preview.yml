@@ -1,0 +1,99 @@
+name: Commit Preview
+
+on:
+    workflow_run:
+        workflows: ["PR Preview"]
+        types:
+            - completed
+
+jobs:
+    commit:
+        runs-on: ubuntu-latest
+        if: github.event.workflow_run.conclusion == 'success'
+        permissions:
+            contents: write
+
+        steps:
+            - name: Download preview artifact
+              uses: dawidd6/action-download-artifact@v7
+              with:
+                  run_id: ${{ github.event.workflow_run.id }}
+                  name: preview-image
+                  path: .
+
+            - name: Download PR info artifact
+              uses: dawidd6/action-download-artifact@v7
+              with:
+                  run_id: ${{ github.event.workflow_run.id }}
+                  name: pr-info
+                  path: .
+
+            - name: Read PR info
+              id: pr-info
+              run: |
+                  echo "pr_number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
+                  echo "commit_sha=$(cat commit_sha.txt)" >> $GITHUB_OUTPUT
+                  echo "new_themes=$(cat new_themes.txt)" >> $GITHUB_OUTPUT
+                  echo "theme=$(cat theme.txt)" >> $GITHUB_OUTPUT
+
+            - name: Setup preview branch
+              run: |
+                  # Configure git
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+                  # Clone only the preview branch, or create new if doesn't exist
+                  if git ls-remote --heads origin previews | grep -q 'refs/heads/previews'; then
+                      git clone --branch previews --single-branch https://github.com/${{ github.repository }}.git .
+                  else
+                      git clone https://github.com/${{ github.repository }}.git .
+                      git checkout --orphan previews
+                      git rm -rf .
+                      git clean -fxd
+                  fi
+
+                  # Setup the preview branch
+                  mkdir -p previews
+
+                  # Copy the new preview with PR number and commit SHA
+                  cp preview.png "previews/pr-${{ steps.pr-info.outputs.pr_number }}-${{ steps.pr-info.outputs.commit_sha }}.png"
+
+                  # Commit and push
+                  git add previews/
+                  git commit -m "Update preview for PR #${{ steps.pr-info.outputs.pr_number }} commit ${{ steps.pr-info.outputs.commit_sha }}" || echo "No changes to commit"
+                  git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git previews
+
+            - name: Find Comment
+              uses: peter-evans/find-comment@v3
+              id: find-comment
+              with:
+                  issue-number: ${{ steps.pr-info.outputs.pr_number }}
+                  comment-author: "github-actions[bot]"
+                  body-includes: "### GitRoll Preview Cards"
+
+            - name: Create comment body
+              id: create-comment
+              run: |
+                  IMAGE_URL="https://raw.githubusercontent.com/${{ github.repository }}/previews/previews/pr-${{ steps.pr-info.outputs.pr_number }}-${{ steps.pr-info.outputs.commit_sha }}.png"
+
+                  echo "body<<EOF" >> $GITHUB_OUTPUT
+                  echo "### GitRoll Preview Cards" >> $GITHUB_OUTPUT
+                  echo "" >> $GITHUB_OUTPUT
+                  if [[ -n "${{ steps.pr-info.outputs.new_themes }}" ]]; then
+                      echo "New theme(s) detected: \`${{ steps.pr-info.outputs.new_themes }}\`" >> $GITHUB_OUTPUT
+                  else
+                      echo "No new theme detected, using: \`${{ steps.pr-info.outputs.theme }}\`" >> $GITHUB_OUTPUT
+                  fi
+                  echo "" >> $GITHUB_OUTPUT
+                  echo "![Preview Cards]($IMAGE_URL)" >> $GITHUB_OUTPUT
+                  echo "" >> $GITHUB_OUTPUT
+                  echo "These are preview cards showing possible ratings. Get your real score at [GitRoll.io](https://gitroll.io)" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Create or update comment
+              uses: peter-evans/create-or-update-comment@v4
+              with:
+                  comment-id: ${{ steps.find-comment.outputs.comment-id }}
+                  issue-number: ${{ steps.pr-info.outputs.pr_number }}
+                  body: ${{ steps.create-comment.outputs.body }}
+                  edit-mode: replace
