@@ -230,6 +230,33 @@ const midnight = {
   logoColor: '#ecf0f1'
 }
 
+const kawaiiCat = {
+  backgroundColor: '#F9FFFE',
+  textColor: '#7A5C58',
+  textColorSecondary: 'rgba(122, 92, 88, 0.65)',
+  badgeColors: {
+    [Rating.S]: '#008080',
+    [Rating.A]: '#199999',
+    [Rating.B]: '#33B3B3',
+    [Rating.C]: '#FFCAD4',
+    [Rating.D]: '#FFD7DE',
+    [Rating.E]: '#FFE4E8',
+  },
+  badgeTextColors: {
+    [Rating.S]: '#FFFFFF',
+    [Rating.A]: '#FFFFFF',
+    [Rating.B]: '#FFFFFF',
+    [Rating.C]: '#7A5C58',
+    [Rating.D]: '#7A5C58',
+    [Rating.E]: '#7A5C58',
+  },
+  barBackground: '#E6F2F2',
+  barForeground: '#008080',
+  borderColor: '#FFCAD4',
+  avatarPlaceholderColor: '#B3D9D9',
+  logoColor: '#008080',
+}
+
 export const preset: Record<string, Theme> = {
   light,
   dark,
@@ -239,4 +266,5 @@ export const preset: Record<string, Theme> = {
   tokyoNight,
   nord,
   midnight,
+  kawaiiCat
 }

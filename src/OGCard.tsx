@@ -1,6 +1,7 @@
 import { Rating } from './rating'
 import { preset, type Theme } from './theme'
 import { GitRollLogo } from './logo'
+import { KawaiiDecorations } from './decorations'
 
 
 export interface OGCardProps {
@@ -41,6 +42,9 @@ export function OGCard({
         color: theme.textColor,
         borderRadius: '10px'
       }}>
+         {theme === preset.kawaiiCat && (
+        <KawaiiDecorations color={theme.borderColor} />
+      )}
       <GitRollLogo fill={theme.logoColor} />
       <div style={{
         display: 'flex',
