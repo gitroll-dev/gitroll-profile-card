@@ -46,11 +46,13 @@ jobs:
                   mkdir -p temp_git
                   cd temp_git
 
+                  REPO_URL="https://github.com/${{ github.repository }}.git"
+
                   # Clone only the preview branch, or create new if doesn't exist
-                  if git ls-remote --heads origin previews | grep -q 'refs/heads/previews'; then
-                      git clone --branch previews --single-branch https://github.com/${{ github.repository }}.git .
+                  if git ls-remote --heads $REPO_URL previews | grep -q 'refs/heads/previews'; then
+                      git clone --branch previews --single-branch $REPO_URL .
                   else
-                      git clone https://github.com/${{ github.repository }}.git .
+                      git clone $REPO_URL .
                       git checkout --orphan previews
                       git rm -rf .
                       git clean -fxd
