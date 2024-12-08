@@ -1,8 +1,8 @@
-interface KawaiiDecorationsProps {
+interface KawaiiCatDecorationProps {
   color: string
 }
 
-export function KawaiiDecorations({ color }: KawaiiDecorationsProps) {
+export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
   return (
     <svg
       width='1200'
