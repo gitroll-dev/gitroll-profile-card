@@ -13,6 +13,8 @@ We now have 7 preset themes to choose from! 🎉
 - **`solarizedDark`**
 - **`tokyoNight`**
 - **`nord`**
+- **`midnight`**
+- **`kawaiiCat`**
 
 To use a preset theme, simply add the `theme` query parameter to the image URL. For example:
 
