@@ -1,5 +1,11 @@
 # @gitroll/profile-card
 
+## 0.2.1
+
+### Patch Changes
+
+- Use full text of "maintainability" and shorten the bars.
+
 ## 0.2.0
 
 ### Minor Changes
