@@ -213,7 +213,7 @@ export function OGCard({
             <div
               style={{
                 fontSize: 28,
-                width: 180,
+                width: 200,
               }}
             >
               Reliability
@@ -223,7 +223,7 @@ export function OGCard({
               style={{
                 display: 'flex',
                 backgroundColor: theme.barBackground,
-                width: 480,
+                width: 460,
                 height: 24,
                 borderRadius: 100,
                 position: 'relative',
@@ -234,11 +234,11 @@ export function OGCard({
                 style={
                   {
                     backgroundColor: theme.barForeground,
-                    width: (reliabilityScore * 480) / 5,
+                    width: (reliabilityScore * 460) / 5,
                     height: 24,
                     position: 'absolute',
                     borderRadius: 100,
-                    '--final-width': `${(maintainabilityScore * 480) / 5}px`,
+                    '--final-width': `${(reliabilityScore * 460) / 5}px`,
                   } as React.CSSProperties
                 }
               ></div>
@@ -256,7 +256,7 @@ export function OGCard({
             <div
               style={{
                 fontSize: 28,
-                width: 180,
+                width: 200,
               }}
             >
               Security
@@ -266,7 +266,7 @@ export function OGCard({
               style={{
                 display: 'flex',
                 backgroundColor: theme.barBackground,
-                width: 480,
+                width: 460,
                 height: 24,
                 borderRadius: 100,
                 position: 'relative',
@@ -277,11 +277,11 @@ export function OGCard({
                 style={
                   {
                     backgroundColor: theme.barForeground,
-                    width: (securityScore * 480) / 5,
+                    width: (securityScore * 460) / 5,
                     height: 24,
                     position: 'absolute',
                     borderRadius: 100,
-                    '--final-width': `${(securityScore * 480) / 5}px`,
+                    '--final-width': `${(securityScore * 460) / 5}px`,
                   } as React.CSSProperties
                 }
               ></div>
@@ -299,17 +299,17 @@ export function OGCard({
             <div
               style={{
                 fontSize: 28,
-                width: 180,
+                width: 200,
               }}
             >
-              Maintainab.
+              Maintainability
             </div>
             <div
               className='bar-background'
               style={{
                 display: 'flex',
                 backgroundColor: theme.barBackground,
-                width: 480,
+                width: 460,
                 height: 24,
                 borderRadius: 100,
                 position: 'relative',
@@ -320,11 +320,11 @@ export function OGCard({
                 style={
                   {
                     backgroundColor: theme.barForeground,
-                    width: (maintainabilityScore * 480) / 5,
+                    width: (maintainabilityScore * 460) / 5,
                     height: 24,
                     position: 'absolute',
                     borderRadius: 100,
-                    '--final-width': `${(maintainabilityScore * 480) / 5}px`,
+                    '--final-width': `${(maintainabilityScore * 460) / 5}px`,
                   } as React.CSSProperties
                 }
               ></div>
