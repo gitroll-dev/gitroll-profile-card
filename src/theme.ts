@@ -1,4 +1,5 @@
-import { Rating } from './rating';
+import { Rating } from './rating'
+
 
 export interface Theme {
   backgroundColor: string;
@@ -38,7 +39,7 @@ const light = {
   borderColor: '#E4E4E7',
   avatarPlaceholderColor: '#9ca3af',
   logoColor: '#030303',
-};
+}
 
 const dark = {
   backgroundColor: '#18181B',
@@ -65,7 +66,7 @@ const dark = {
   borderColor: '#27272A',
   avatarPlaceholderColor: '#52525B',
   logoColor: '#fff',
-};
+}
 
 const sepia = {
   backgroundColor: '#f4ecd8',
@@ -92,7 +93,7 @@ const sepia = {
   borderColor: '#c2b280',
   avatarPlaceholderColor: '#b4a078',
   logoColor: '#5b4636',
-};
+}
 
 const solarizedLight = {
   backgroundColor: '#fdf6e3',
@@ -119,7 +120,7 @@ const solarizedLight = {
   borderColor: '#93a1a1',
   avatarPlaceholderColor: '#93a1a1',
   logoColor: '#657b83',
-};
+}
 
 const solarizedDark = {
   backgroundColor: '#002b36',
@@ -146,7 +147,7 @@ const solarizedDark = {
   borderColor: '#586e75',
   avatarPlaceholderColor: '#586e75',
   logoColor: '#839496',
-};
+}
 
 const tokyoNight = {
   backgroundColor: '#1a1b26',
@@ -173,7 +174,7 @@ const tokyoNight = {
   borderColor: '#3b4261',
   avatarPlaceholderColor: '#565f89',
   logoColor: '#c0caf5',
-};
+}
 
 const nord = {
   backgroundColor: '#2e3440',
@@ -200,7 +201,7 @@ const nord = {
   borderColor: '#4c566a',
   avatarPlaceholderColor: '#434c5e',
   logoColor: '#d8dee9',
-};
+}
 
 const midnight = {
   backgroundColor: '#1c1e2d',
@@ -227,7 +228,7 @@ const midnight = {
   borderColor: '#34495e',
   avatarPlaceholderColor: '#7f8c8d',
   logoColor: '#ecf0f1',
-};
+}
 
 const kawaiiCat = {
   backgroundColor: '#F9FFFE',
@@ -254,7 +255,7 @@ const kawaiiCat = {
   borderColor: '#FFCAD4',
   avatarPlaceholderColor: '#B3D9D9',
   logoColor: '#FFCAD4',
-};
+}
 
 const retro = {
   backgroundColor: '#240046',
@@ -281,7 +282,7 @@ const retro = {
   borderColor: '#E4E4E7',
   avatarPlaceholderColor: '#9ca3af',
   logoColor: '#ebd9fc',
-};
+}
 
 export const preset: Record<string, Theme> = {
   light,
@@ -294,4 +295,4 @@ export const preset: Record<string, Theme> = {
   midnight,
   kawaiiCat,
   retro,
-};
+}

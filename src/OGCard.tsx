@@ -1,7 +1,8 @@
-import { Rating } from './rating';
-import { preset, type Theme } from './theme';
-import { GitRollLogo } from './logo';
-import { KawaiiCatDecoration, RetroThemeDecoration } from './decorations';
+import { Rating } from './rating'
+import { preset, type Theme } from './theme'
+import { GitRollLogo } from './logo'
+import { KawaiiCatDecoration, RetroThemeDecoration } from './decorations'
+
 
 export interface OGCardProps {
   user: string;
@@ -34,7 +35,7 @@ export function OGCard({
   campusRank,
   theme = preset.light,
 }: OGCardProps) {
-  const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E];
+  const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E]
   return (
     <div
       id='card-container'
@@ -401,5 +402,5 @@ export function OGCard({
         )}
       </div>
     </div>
-  );
+  )
 }

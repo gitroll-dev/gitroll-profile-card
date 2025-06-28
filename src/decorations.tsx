@@ -59,7 +59,7 @@ export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
         />
       </g>
     </svg>
-  );
+  )
 }
 
 export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
@@ -119,5 +119,5 @@ export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
         />
       </g>
     </svg>
-  );
+  )
 }
