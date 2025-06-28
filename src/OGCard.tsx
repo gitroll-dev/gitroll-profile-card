@@ -5,34 +5,27 @@ import { KawaiiCatDecoration, RetroThemeDecoration } from './decorations'
 
 
 export interface OGCardProps {
-  user: string;
-  avatar: string | null;
-  devType: string | null;
-  overallScore: string;
-  overallScoreCDF: string;
-  overallRating: Rating;
-  reliabilityScore: number;
-  securityScore: number;
-  maintainabilityScore: number;
-  contributor: boolean;
-  regionalRank?: [string | number, string] | null;
-  campusRank?: [string | number, string] | null;
-  theme?: Theme;
+  user: string
+  avatar: string | null
+  devType: string | null
+  overallScore: string
+  overallScoreCDF: string
+  overallRating: Rating
+  reliabilityScore: number
+  securityScore: number
+  maintainabilityScore: number
+  contributor: boolean
+  regionalRank?: [ string | number, string ] | null
+  campusRank?: [ string | number, string ] | null
+  theme?: Theme
 }
 
 export function OGCard({
-  user,
-  avatar,
-  devType,
-  overallScore,
-  overallScoreCDF,
-  overallRating,
-  reliabilityScore,
-  securityScore,
-  maintainabilityScore,
+  user, avatar, devType,
+  overallScore, overallScoreCDF, overallRating,
+  reliabilityScore, securityScore, maintainabilityScore,
   contributor,
-  regionalRank,
-  campusRank,
+  regionalRank, campusRank,
   theme = preset.light,
 }: OGCardProps) {
   const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E]

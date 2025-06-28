@@ -1,8 +1,8 @@
 interface KawaiiCatDecorationProps {
-  color: string;
+  color: string
 }
 interface RetroThemeDecorationProps {
-  color: string;
+  color: string
 }
 export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
   return (
