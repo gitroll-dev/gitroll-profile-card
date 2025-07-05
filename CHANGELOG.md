@@ -1,5 +1,11 @@
 # @gitroll/profile-card
 
+## 0.2.2
+
+### Patch Changes
+
+- [#17](https://github.com/gitroll-dev/gitroll-profile-card/pull/17) [`7269c6f`](https://github.com/gitroll-dev/gitroll-profile-card/commit/7269c6f08d0b45b1035f8ddcae6fb8b9661adb84) Thanks [@JacobLinCool](https://github.com/JacobLinCool)! - Add retro theme
+
 ## 0.2.1
 
 ### Patch Changes
