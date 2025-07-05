@@ -227,7 +227,7 @@ const midnight = {
   barForeground: '#ecf0f1',
   borderColor: '#34495e',
   avatarPlaceholderColor: '#7f8c8d',
-  logoColor: '#ecf0f1'
+  logoColor: '#ecf0f1',
 }
 
 const kawaiiCat = {
@@ -240,7 +240,7 @@ const kawaiiCat = {
     [Rating.B]: '#66B2B2', 
     [Rating.C]: '#80BFBF', 
     [Rating.D]: '#99CCCC', 
-    [Rating.E]: '#B3D9D9', 
+    [Rating.E]: '#B3D9D9'
   },
   badgeTextColors: {
     [Rating.S]: '#7A5C58', 
@@ -248,13 +248,40 @@ const kawaiiCat = {
     [Rating.B]: '#FFFFFF', 
     [Rating.C]: '#FFFFFF',
     [Rating.D]: '#7A5C58',
-    [Rating.E]: '#7A5C58',
+    [Rating.E]: '#7A5C58'
   },
   barBackground: '#FFCAD4',
   barForeground: '#66B2B2',
   borderColor: '#FFCAD4',
   avatarPlaceholderColor: '#B3D9D9',
   logoColor: '#FFCAD4',
+}
+
+const retro = {
+  backgroundColor: '#240046',
+  textColor: '#f2ebfb',
+  textColorSecondary: 'rgba(255, 255, 255, 0.6)',
+  badgeColors: {
+    [Rating.S]: '#fbe300',
+    [Rating.A]: '#9cf945',
+    [Rating.B]: '#4cc9f0',
+    [Rating.C]: '#9d4edd',
+    [Rating.D]: '#f72585',
+    [Rating.E]: '#ff6200',
+  },
+  badgeTextColors: {
+    [Rating.S]: '#240046',
+    [Rating.A]: '#240046',
+    [Rating.B]: '#240046',
+    [Rating.C]: '#240046',
+    [Rating.D]: '#240046',
+    [Rating.E]: '#240046',
+  },
+  barBackground: '#F4F4F5',
+  barForeground: '#9d4edd',
+  borderColor: '#E4E4E7',
+  avatarPlaceholderColor: '#9ca3af',
+  logoColor: '#ebd9fc',
 }
 
 export const preset: Record<string, Theme> = {
@@ -266,5 +293,6 @@ export const preset: Record<string, Theme> = {
   tokyoNight,
   nord,
   midnight,
-  kawaiiCat
+  kawaiiCat,
+  retro,
 }

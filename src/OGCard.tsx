@@ -1,7 +1,7 @@
 import { Rating } from './rating'
 import { preset, type Theme } from './theme'
 import { GitRollLogo } from './logo'
-import { KawaiiCatDecoration } from './decorations'
+import { KawaiiCatDecoration, RetroThemeDecoration } from './decorations'
 
 
 export interface OGCardProps {
@@ -26,7 +26,7 @@ export function OGCard({
   reliabilityScore, securityScore, maintainabilityScore,
   contributor,
   regionalRank, campusRank,
-  theme = preset.light
+  theme = preset.light,
 }: OGCardProps) {
   const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E]
   return (
@@ -45,6 +45,9 @@ export function OGCard({
     >
       {theme === preset.kawaiiCat && (
         <KawaiiCatDecoration color={theme.barForeground} />
+      )}
+      {theme === preset.retro && (
+        <RetroThemeDecoration color={theme.barForeground} />
       )}
       <GitRollLogo fill={theme.logoColor} />
       <div
