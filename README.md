@@ -4,7 +4,7 @@
 
 ## Available Themes
 
-We now have 7 preset themes to choose from! 🎉
+We now have 9 preset themes to choose from! 🎉
 
 - **`light`** (default)
 - **`dark`**
@@ -15,6 +15,8 @@ We now have 7 preset themes to choose from! 🎉
 - **`nord`**
 - **`midnight`**
 - **`kawaiiCat`**
+- **`retro`**
+- **`darkEmerald`**
 
 To use a preset theme, simply add the `theme` query parameter to the image URL. For example:
 
