@@ -1,5 +1,11 @@
 # @gitroll/profile-card
 
+## 0.2.3
+
+### Patch Changes
+
+- [#19](https://github.com/gitroll-dev/gitroll-profile-card/pull/19) [`677b60f`](https://github.com/gitroll-dev/gitroll-profile-card/commit/677b60f3418bb5a8c6996c38a3ad67a60feaebc5) Thanks [@emmanyouwell](https://github.com/emmanyouwell)! - Added Dark Emerald theme
+
 ## 0.2.2
 
 ### Patch Changes
