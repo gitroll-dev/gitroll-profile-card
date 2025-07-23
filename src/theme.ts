@@ -284,15 +284,15 @@ const retro = {
   logoColor: '#ebd9fc',
 }
 const darkEmerald = {
-  backgroundColor: 'linear-gradient(to top left, oklch(0.696 0.17 162.48), oklch(0.141 0.005 285.823), oklch(0.141 0.005 285.823))',
+  backgroundColor: 'linear-gradient(to top left, #00bc7d, #1a1a24, #1a1a24)',
   textColor: '#ffffffff',
   textColorSecondary: '#22c55e',
   badgeColors: {
-    [Rating.S]: '#86efac',
-    [Rating.A]: '#bef264',
-    [Rating.B]: '#c084fc',
-    [Rating.C]: '#fef08a',
-    [Rating.D]: '#f72585',
+    [Rating.S]: '#a78bfa',
+    [Rating.A]: '#4ade80',
+    [Rating.B]: '#a3e635',
+    [Rating.C]: '#fb923c',
+    [Rating.D]: '#f87171',
     [Rating.E]: '#6b7280',
   },
   badgeTextColors: {
@@ -304,10 +304,10 @@ const darkEmerald = {
     [Rating.E]: '#fff',
   },
   barBackground: '#F4F4F5',
-  barForeground: 'oklch(0.696 0.17 162.48)',
+  barForeground: '#00bc7d',
   borderColor: '#1cab90',
   avatarPlaceholderColor: '#9ca3af',
-  logoColor: 'oklch(0.696 0.17 162.48)',
+  logoColor: '#00bc7d',
 }
 export const preset: Record<string, Theme> = {
   light,

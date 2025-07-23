@@ -130,16 +130,16 @@ export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationPr
   let endColor=''
   switch(rating) {
     case 'S':
-      endColor = '#052e16'
+      endColor = '#1e1b4b'
       break
     case 'A':
-      endColor = '#1a2e05'
+      endColor = '#052e16'
       break
     case 'B':
-      endColor = '#3b0764'
+      endColor = '#1a2e05'
       break
     case 'C':
-      endColor = '#422006'
+      endColor = '#431407'
       break
     case 'D':
       endColor = '#450a0a'
