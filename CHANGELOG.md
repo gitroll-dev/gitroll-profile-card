@@ -1,5 +1,11 @@
 # @gitroll/profile-card
 
+## 0.2.4
+
+### Patch Changes
+
+- [#22](https://github.com/gitroll-dev/gitroll-profile-card/pull/22) [`c46830d`](https://github.com/gitroll-dev/gitroll-profile-card/commit/c46830d637934a1e108cb2e3994252d76d71f738) Thanks [@ggfevans](https://github.com/ggfevans)! - Added Dracula theme
+
 ## 0.2.3
 
 ### Patch Changes
