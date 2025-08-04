@@ -91,3 +91,10 @@ export const Midnight: Story = {
   }
 }
 
+export const Dracula: Story = {
+  args: {
+    ...baseProps,
+    theme: preset.dracula,
+  },
+}
+
