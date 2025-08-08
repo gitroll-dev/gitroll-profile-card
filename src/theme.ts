@@ -336,6 +336,34 @@ const dracula = {
   avatarPlaceholderColor: '#6272A4',
   logoColor: '#F8F8F2',
 }
+
+const WatchdogGradient = {
+  backgroundColor: 'linear-gradient(to top left, #520806, #021D4A, #520806)',
+  textColor: '#ffffffff',
+  textColorSecondary: '#A9FEF7',
+  badgeColors: {
+    [Rating.S]: '#a78bfa',
+    [Rating.A]: '#4ade80',
+    [Rating.B]: '#a3e635',
+    [Rating.C]: '#fb923c',
+    [Rating.D]: '#f87171',
+    [Rating.E]: '#6b7280',
+  },
+  badgeTextColors: {
+    [Rating.S]: '#F8D847',
+    [Rating.A]: '#F8D847',
+    [Rating.B]: '#F8D847',
+    [Rating.C]: '#F8D847',
+    [Rating.D]: '#F8D847',
+    [Rating.E]: '#FF0000',
+  },
+  barBackground: '#F4F4F5',
+  barForeground: '#EB8C30',
+  borderColor: '#E4E2E2',
+  avatarPlaceholderColor: '#FE428E',
+  logoColor: '#EB8C30',
+}
+
 export const preset: Record<string, Theme> = {
   light,
   dark,
@@ -348,5 +376,6 @@ export const preset: Record<string, Theme> = {
   kawaiiCat,
   retro,
   darkEmerald,
-  dracula
+  dracula,
+  WatchdogGradient
 }
