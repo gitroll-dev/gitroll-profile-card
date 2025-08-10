@@ -1,7 +1,7 @@
 import { Rating } from './rating'
 import { preset, type Theme } from './theme'
 import { GitRollLogo } from './logo'
-import { DarkEmeraldDecoration, KawaiiCatDecoration, RetroThemeDecoration, WatchdogGradientDecoration } from './decorations'
+import { WatchdogGradientDecoration, DarkEmeraldDecoration, KawaiiCatDecoration, RetroThemeDecoration } from './decorations'
 
 
 export interface OGCardProps {
@@ -153,7 +153,7 @@ export function OGCard({
                 position: 'relative'
               }}
             >
-              {theme === preset.darkEmerald && (<DarkEmeraldDecoration color={bg} rating={overallRating}/>)} || {theme === preset.WatchdogGradient && (<WatchdogGradientDecoration color={bg} rating={overallRating}/>)}
+              {theme === preset.darkEmerald && (<DarkEmeraldDecoration color={bg} rating={overallRating}/>) || theme === preset.WatchdogGradient && (<WatchdogGradientDecoration color={bg} rating={overallRating}/>)}
               <div
                 id='overall-rating'
                 style={{
