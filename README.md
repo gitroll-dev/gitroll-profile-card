@@ -4,7 +4,7 @@
 
 ## Available Themes
 
-We now have 10 preset themes to choose from! 🎉
+We now have 13 preset themes to choose from! 🎉
 
 - **`light`** (default)
 - **`dark`**
@@ -18,11 +18,18 @@ We now have 10 preset themes to choose from! 🎉
 - **`retro`**
 - **`darkEmerald`**
 - **`dracula`**
+- **`WatchdogGradient`**
 
 To use a preset theme, simply add the `theme` query parameter to the image URL. For example:
 
 ```
 https://gitroll.io/api/badges/profiles/v1/uZxjMB3mkXpQQPskvTMcp0UeqPJA3?theme=nord
+```
+
+Or try the new WatchdogGradient theme:
+
+```
+https://gitroll.io/api/badges/profiles/v1/uZxjMB3mkXpQQPskvTMcp0UeqPJA3?theme=WatchdogGradient
 ```
 
 ## Contributing
