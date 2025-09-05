@@ -8,6 +8,12 @@ interface DarkEmeraldDecorationProps {
   color: string;
   rating: string;
 }
+
+interface WatchdogGradientDecorationProps {
+  color: string;
+  rating: string;
+}
+
 export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
   return (
     <svg
@@ -127,6 +133,74 @@ export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
 }
 
 export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationProps) {
+  let endColor=''
+  switch(rating) {
+    case 'S':
+      endColor = '#1e1b4b'
+      break
+    case 'A':
+      endColor = '#052e16'
+      break
+    case 'B':
+      endColor = '#1a2e05'
+      break
+    case 'C':
+      endColor = '#431407'
+      break
+    case 'D':
+      endColor = '#450a0a'
+      break
+    default:
+      endColor = '#030712'
+      break
+  }
+  return (
+    <svg
+      width='80'
+      height='80'
+      viewBox='0 0 80 80'
+      xmlns='http://www.w3.org/2000/svg'
+      style={{
+        position: 'absolute'
+      }}
+    >
+      <defs>
+        <radialGradient id='shine' cx='0.3' cy='0.3' r='0.8'>
+          <stop offset='0%' stop-color={color} />
+          <stop offset='100%' stop-color={endColor} />
+        </radialGradient>
+        <pattern
+          id='retro-grid'
+          width='20'
+          height='20'
+          patternUnits='userSpaceOnUse'
+        >
+          <path
+            d='M 20 0 L 0 0 0 20'
+            fill='none'
+            stroke='white'
+            stroke-width='0.5'
+            opacity='0.2'
+          />
+        </pattern>
+      </defs>
+      <rect width='80' height='80' fill='url(#shine)' rx='1000' />
+      <rect width='80' height='80' fill='url(#retro-grid)' rx='1000' />
+      <g fill='white' opacity='0.4'>
+        <path
+          transform='translate(20, 20) scale(0.3)'
+          d='M10 0 L13 7 L21 7 L15 13 L17 21 L10 17 L3 21 L5 13 L-1 7 L7 7Z'
+        />
+        <path
+          transform='translate(60, 25) scale(0.25)'
+          d='M10 0 L13 7 L21 7 L15 13 L17 21 L10 17 L3 21 L5 13 L-1 7 L7 7Z'
+        />
+      </g>
+    </svg>
+  )
+}
+
+export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDecorationProps) {
   let endColor=''
   switch(rating) {
     case 'S':
