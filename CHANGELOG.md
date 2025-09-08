@@ -1,5 +1,11 @@
 # @gitroll/profile-card
 
+## 0.3.0
+
+### Minor Changes
+
+- [#27](https://github.com/gitroll-dev/gitroll-profile-card/pull/27) [`4a9e9d5`](https://github.com/gitroll-dev/gitroll-profile-card/commit/4a9e9d5d40a7e8fabed8012cd1252e040e28d9cd) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Add WatchdogGradient theme support
+
 ## 0.2.4
 
 ### Patch Changes
