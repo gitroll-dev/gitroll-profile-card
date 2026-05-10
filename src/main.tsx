@@ -83,7 +83,7 @@ function App() {
     logoColor: '#030303',
   })
 
-  const [props, setProps] = useState({
+  const [props, setProps] = useState<any>({
     user: 'GitHub Username',
     avatar: 'https://avatars.githubusercontent.com/u/9919?s=200&v=4',
     devType: 'Exemplary AI/ML Developer',
@@ -97,9 +97,11 @@ function App() {
     regionalRank: [1, 'TW'] as [number, string],
     campusRank: [1, 'ntnu'] as [number, string],
     theme: preset.light,
+    decoration: undefined,
     badgeDecoration: undefined,
     decorationColor: undefined,
     badgeDecorationColor: undefined,
+    customDecorationPath: undefined,
   })
 
   useEffect(() => {
@@ -128,7 +130,7 @@ function App() {
   }, [props])
 
   const handleInputChange = (field: string, value: unknown) => {
-    setProps((prev) => ({
+    setProps((prev: any) => ({
       ...prev,
       [field]: value,
     }))
@@ -373,6 +375,8 @@ function App() {
 
             <InputGroup>
               <label>Decoration</label>
+              <select
+                value={props.decoration || 'none'}
                 onChange={(e) => handleInputChange('decoration', e.target.value === 'none' ? undefined : e.target.value)}
                 style={selectStyle}
               >
@@ -380,7 +384,19 @@ function App() {
                 <option value="geometric">Geometric</option>
                 <option value="retro">Retro</option>
                 <option value="kawaiiCat">Kawaii Cat</option>
+                <option value="custom">Custom</option>
               </select>
+              {props.decoration === 'custom' && (
+                <div style={{ marginTop: '8px' }}>
+                  <label style={{ fontSize: '12px', opacity: 0.7 }}>SVG Path (d="..." content)</label>
+                  <textarea
+                    value={props.customDecorationPath || ''}
+                    onChange={(e) => handleInputChange('customDecorationPath', e.target.value)}
+                    placeholder="e.g. M10 10 L90 90..."
+                    style={{ ...inputStyle, width: '100%', height: '80px', fontFamily: 'monospace' }}
+                  />
+                </div>
+              )}
               {props.decoration && (
                 <div style={{ marginTop: '4px' }}>
                   <label style={{ fontSize: '12px', opacity: 0.7 }}>Custom Color</label>
@@ -401,7 +417,6 @@ function App() {
                 style={selectStyle}
               >
                 <option value="none">None</option>
-                <option value="emerald">Emerald</option>
                 <option value="watchdog">Watchdog</option>
               </select>
               {props.badgeDecoration && (
@@ -415,7 +430,6 @@ function App() {
                 </div>
               )}
             </InputGroup>
-
 
             {isCustomTheme && (
               <>

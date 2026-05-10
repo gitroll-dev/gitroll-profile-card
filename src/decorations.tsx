@@ -247,6 +247,26 @@ export function GeometricDecoration({ color }: GeometricDecorationProps) {
   )
 }
 
+export function CustomDecoration({ color, path }: { color: string; path: string }) {
+  if (!path) return null
+  return (
+    <svg
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 0,
+      }}
+    >
+      <path d={path} fill={color} fillOpacity='0.1' />
+    </svg>
+  )
+}
 export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDecorationProps) {
   let endColor=''
   switch(rating) {

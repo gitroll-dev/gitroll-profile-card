@@ -2,17 +2,17 @@ import React from 'react'
 import { Rating } from './rating'
 import { preset, type Theme } from './theme'
 import { GitRollLogo } from './logo'
-import { WatchdogGradientDecoration, DarkEmeraldDecoration, KawaiiCatDecoration, RetroThemeDecoration, GeometricDecoration } from './decorations'
+import { WatchdogGradientDecoration, KawaiiCatDecoration, RetroThemeDecoration, GeometricDecoration, CustomDecoration } from './decorations'
 
 
-const decorationMap: Record<string, React.FC<{ color: string }>> = {
+const decorationMap: Record<string, React.FC<any>> = {
   kawaiiCat: KawaiiCatDecoration,
   retro: RetroThemeDecoration,
   geometric: GeometricDecoration,
+  custom: CustomDecoration,
 }
 
-const badgeDecorationMap: Record<string, React.FC<{ color: string; rating: string }>> = {
-  emerald: DarkEmeraldDecoration,
+const badgeDecorationMap: Record<string, React.FC<any>> = {
   watchdog: WatchdogGradientDecoration,
 }
 
@@ -28,13 +28,14 @@ export interface OGCardProps {
   securityScore: number
   maintainabilityScore: number
   contributor: boolean
-  regionalRank?: [ string | number, string ] | null
-  campusRank?: [ string | number, string ] | null
+  regionalRank?: [string | number, string] | null
+  campusRank?: [string | number, string] | null
   theme?: Theme
   decoration?: string
   badgeDecoration?: string
   decorationColor?: string
   badgeDecorationColor?: string
+  customDecorationPath?: string
 }
 
 export function OGCard({
@@ -48,10 +49,12 @@ export function OGCard({
   badgeDecoration,
   decorationColor,
   badgeDecorationColor,
+  customDecorationPath,
 }: OGCardProps) {
   const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E]
   const decColor = decorationColor || theme.barForeground
   const badgeDecColor = badgeDecorationColor || bg
+  
   return (
     <div
       id='card-container'
@@ -68,7 +71,10 @@ export function OGCard({
       }}
     >
       {decoration && decorationMap[decoration] && (
-        React.createElement(decorationMap[decoration], { color: decColor })
+        React.createElement(decorationMap[decoration], { 
+          color: decColor,
+          path: decoration === 'custom' ? customDecorationPath : undefined
+        })
       )}
       <GitRollLogo fill={theme.logoColor} />
       <div
@@ -174,7 +180,10 @@ export function OGCard({
               }}
             >
               {badgeDecoration && badgeDecorationMap[badgeDecoration] && (
-                React.createElement(badgeDecorationMap[badgeDecoration], { color: badgeDecColor, rating: overallRating })
+                React.createElement(badgeDecorationMap[badgeDecoration], { 
+                  color: badgeDecColor, 
+                  rating: overallRating,
+                })
               )}
               <div
                 id='overall-rating'

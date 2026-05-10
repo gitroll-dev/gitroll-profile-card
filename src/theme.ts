@@ -2,7 +2,7 @@ import { Rating } from './rating'
 
 
 export type DecorationType = 'kawaiiCat' | 'retro' | 'geometric' | 'none';
-export type BadgeDecorationType = 'emerald' | 'watchdog' | 'none';
+export type BadgeDecorationType = 'watchdog' | 'none';
 
 export interface Theme {
   backgroundColor: string;
