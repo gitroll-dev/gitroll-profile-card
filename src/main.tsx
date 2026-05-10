@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom/client'
 import satori from 'satori'
 import { OGCard } from './OGCard'
 import { Rating } from './rating'
-import { preset, type Theme } from './theme'
+import { preset } from './theme'
+import type { Theme } from './theme'
 
 
 const InputGroup = ({ children }: { children: React.ReactNode }) => <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>{children}</div>
@@ -96,6 +97,9 @@ function App() {
     regionalRank: [1, 'TW'] as [number, string],
     campusRank: [1, 'ntnu'] as [number, string],
     theme: preset.light,
+    badgeDecoration: undefined,
+    decorationColor: undefined,
+    badgeDecorationColor: undefined,
   })
 
   useEffect(() => {
@@ -366,6 +370,52 @@ function App() {
                 }}
               />
             </InputGroup>
+
+            <InputGroup>
+              <label>Decoration</label>
+                onChange={(e) => handleInputChange('decoration', e.target.value === 'none' ? undefined : e.target.value)}
+                style={selectStyle}
+              >
+                <option value="none">None</option>
+                <option value="geometric">Geometric</option>
+                <option value="retro">Retro</option>
+                <option value="kawaiiCat">Kawaii Cat</option>
+              </select>
+              {props.decoration && (
+                <div style={{ marginTop: '4px' }}>
+                  <label style={{ fontSize: '12px', opacity: 0.7 }}>Custom Color</label>
+                  <ColorInput
+                    label="Decoration Color"
+                    value={props.decorationColor || (props.theme as any).barForeground}
+                    onChange={(value) => handleInputChange('decorationColor', value)}
+                  />
+                </div>
+              )}
+            </InputGroup>
+
+            <InputGroup>
+              <label>Badge Decoration</label>
+              <select
+                value={props.badgeDecoration || 'none'}
+                onChange={(e) => handleInputChange('badgeDecoration', e.target.value === 'none' ? undefined : e.target.value)}
+                style={selectStyle}
+              >
+                <option value="none">None</option>
+                <option value="emerald">Emerald</option>
+                <option value="watchdog">Watchdog</option>
+              </select>
+              {props.badgeDecoration && (
+                <div style={{ marginTop: '4px' }}>
+                  <label style={{ fontSize: '12px', opacity: 0.7 }}>Custom Color</label>
+                  <ColorInput
+                    label="Badge Decoration Color"
+                    value={props.badgeDecorationColor || props.theme.badgeColors[props.overallRating]}
+                    onChange={(value) => handleInputChange('badgeDecorationColor', value)}
+                  />
+                </div>
+              )}
+            </InputGroup>
+
 
             {isCustomTheme && (
               <>

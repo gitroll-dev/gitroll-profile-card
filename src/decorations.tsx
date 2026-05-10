@@ -14,6 +14,10 @@ interface WatchdogGradientDecorationProps {
   rating: string;
 }
 
+interface GeometricDecorationProps {
+  color: string;
+}
+
 export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
   return (
     <svg
@@ -195,6 +199,49 @@ export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationPr
           transform='translate(60, 25) scale(0.25)'
           d='M10 0 L13 7 L21 7 L15 13 L17 21 L10 17 L3 21 L5 13 L-1 7 L7 7Z'
         />
+      </g>
+    </svg>
+  )
+}
+
+export function GeometricDecoration({ color }: GeometricDecorationProps) {
+  return (
+    <svg
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        overflow: 'visible',
+      }}
+    >
+      <g opacity='0.15'>
+        {/* Large Triangles */}
+        <path d='M-100 675 L200 300 L500 675 Z' fill={color} />
+        <path d='M1200 0 L900 300 L600 0 Z' fill={color} />
+
+        {/* Polygons */}
+        <path d='M1000 500 L1100 550 L1050 650 L950 600 Z' fill={color} />
+        <path d='M50 50 L150 30 L200 100 L100 120 Z' fill={color} />
+
+        {/* Scattered small triangles */}
+        {[
+          [300, 100], [800, 400], [500, 50], [1100, 150]
+        ].map(([x, y], i) => (
+          <path
+            key={i}
+            transform={`translate(${x}, ${y}) rotate(${i * 45})`}
+            d='M0 0 L20 40 L-20 40 Z'
+            fill={color}
+          />
+        ))}
+
+        {/* Circles */}
+        <circle cx='600' cy='337' r='150' stroke={color} strokeWidth='2' fill='none' />
+        <circle cx='600' cy='337' r='200' stroke={color} strokeWidth='1' fill='none' opacity='0.5' />
       </g>
     </svg>
   )

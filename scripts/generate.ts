@@ -17,6 +17,8 @@ interface CliOptions {
   contributor?: boolean;
   format?: 'svg' | 'png';
   grid?: boolean;
+  decoration?: string;
+  badgeDecoration?: string;
 }
 
 function parseArgs(): CliOptions {
@@ -72,6 +74,16 @@ function parseArgs(): CliOptions {
         options.format = 'png' // Force PNG for grid mode
         break
       }
+      case '--decoration':
+      case '--dec': {
+        options.decoration = args[++i]
+        break
+      }
+      case '--badge-decoration':
+      case '--bdec': {
+        options.badgeDecoration = args[++i]
+        break
+      }
       case '--help':
       case '-h': {
         printHelp()
@@ -105,6 +117,8 @@ Options:
   -c, --contributor        Mark as contributor
   -f, --format <format>    Output format (svg/png)
   -g, --grid              Generate a grid of all ratings
+  --decoration <type>     Decoration type (geometric/retro/kawaiiCat)
+  --badge-decoration <t>  Badge decoration (emerald/watchdog)
   -h, --help              Show this help message
 `)
 }
@@ -232,6 +246,8 @@ async function main() {
     overallScore: '9.05',
     overallScoreCDF: '99',
     overallRating: Rating.S,
+    decoration: options.decoration as any,
+    badgeDecoration: options.badgeDecoration as any,
   }
 
   if (options.grid) {

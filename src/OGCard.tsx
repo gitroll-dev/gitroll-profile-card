@@ -1,7 +1,20 @@
+import React from 'react'
 import { Rating } from './rating'
 import { preset, type Theme } from './theme'
 import { GitRollLogo } from './logo'
-import { WatchdogGradientDecoration, DarkEmeraldDecoration, KawaiiCatDecoration, RetroThemeDecoration } from './decorations'
+import { WatchdogGradientDecoration, DarkEmeraldDecoration, KawaiiCatDecoration, RetroThemeDecoration, GeometricDecoration } from './decorations'
+
+
+const decorationMap: Record<string, React.FC<{ color: string }>> = {
+  kawaiiCat: KawaiiCatDecoration,
+  retro: RetroThemeDecoration,
+  geometric: GeometricDecoration,
+}
+
+const badgeDecorationMap: Record<string, React.FC<{ color: string; rating: string }>> = {
+  emerald: DarkEmeraldDecoration,
+  watchdog: WatchdogGradientDecoration,
+}
 
 
 export interface OGCardProps {
@@ -18,6 +31,10 @@ export interface OGCardProps {
   regionalRank?: [ string | number, string ] | null
   campusRank?: [ string | number, string ] | null
   theme?: Theme
+  decoration?: string
+  badgeDecoration?: string
+  decorationColor?: string
+  badgeDecorationColor?: string
 }
 
 export function OGCard({
@@ -27,8 +44,14 @@ export function OGCard({
   contributor,
   regionalRank, campusRank,
   theme = preset.light,
+  decoration,
+  badgeDecoration,
+  decorationColor,
+  badgeDecorationColor,
 }: OGCardProps) {
   const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E]
+  const decColor = decorationColor || theme.barForeground
+  const badgeDecColor = badgeDecorationColor || bg
   return (
     <div
       id='card-container'
@@ -44,11 +67,8 @@ export function OGCard({
         borderRadius: '10px',
       }}
     >
-      {theme === preset.kawaiiCat && (
-        <KawaiiCatDecoration color={theme.barForeground} />
-      )}
-      {theme === preset.retro && (
-        <RetroThemeDecoration color={theme.barForeground} />
+      {decoration && decorationMap[decoration] && (
+        React.createElement(decorationMap[decoration], { color: decColor })
       )}
       <GitRollLogo fill={theme.logoColor} />
       <div
@@ -153,7 +173,9 @@ export function OGCard({
                 position: 'relative'
               }}
             >
-              {theme === preset.darkEmerald && (<DarkEmeraldDecoration color={bg} rating={overallRating}/>) || theme === preset.WatchdogGradient && (<WatchdogGradientDecoration color={bg} rating={overallRating}/>)}
+              {badgeDecoration && badgeDecorationMap[badgeDecoration] && (
+                React.createElement(badgeDecorationMap[badgeDecoration], { color: badgeDecColor, rating: overallRating })
+              )}
               <div
                 id='overall-rating'
                 style={{
