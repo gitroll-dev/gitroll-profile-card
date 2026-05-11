@@ -93,7 +93,7 @@ export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
       {/* Retro-style grid background */}
       <defs>
         <pattern
-          id='retro-grid'
+          id='retro-theme-grid'
           width='40'
           height='40'
           patternUnits='userSpaceOnUse'
@@ -107,7 +107,7 @@ export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
           />
         </pattern>
       </defs>
-      <rect width='1200' height='675' fill='url(#retro-grid)' />
+      <rect width='1200' height='675' fill='url(#retro-theme-grid)' />
       {/* Stars */}
       <g fill={color} opacity='0.5'>
         {[
@@ -169,12 +169,12 @@ export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationPr
       }}
     >
       <defs>
-        <radialGradient id='shine' cx='0.3' cy='0.3' r='0.8'>
+        <radialGradient id='emerald-shine' cx='0.3' cy='0.3' r='0.8'>
           <stop offset='0%' stop-color={color} />
           <stop offset='100%' stop-color={endColor} />
         </radialGradient>
         <pattern
-          id='retro-grid'
+          id='emerald-grid'
           width='20'
           height='20'
           patternUnits='userSpaceOnUse'
@@ -188,8 +188,8 @@ export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationPr
           />
         </pattern>
       </defs>
-      <rect width='80' height='80' fill='url(#shine)' rx='1000' />
-      <rect width='80' height='80' fill='url(#retro-grid)' rx='1000' />
+      <rect width='80' height='80' fill='url(#emerald-shine)' rx='1000' />
+      <rect width='80' height='80' fill='url(#emerald-grid)' rx='1000' />
       <g fill='white' opacity='0.4'>
         <path
           transform='translate(20, 20) scale(0.3)'
@@ -300,12 +300,12 @@ export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDe
       }}
     >
       <defs>
-        <radialGradient id='shine' cx='0.3' cy='0.3' r='0.8'>
+        <radialGradient id='watchdog-shine' cx='0.3' cy='0.3' r='0.8'>
           <stop offset='0%' stop-color={color} />
           <stop offset='100%' stop-color={endColor} />
         </radialGradient>
         <pattern
-          id='retro-grid'
+          id='watchdog-grid'
           width='20'
           height='20'
           patternUnits='userSpaceOnUse'
@@ -319,8 +319,8 @@ export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDe
           />
         </pattern>
       </defs>
-      <rect width='80' height='80' fill='url(#shine)' rx='1000' />
-      <rect width='80' height='80' fill='url(#retro-grid)' rx='1000' />
+      <rect width='80' height='80' fill='url(#watchdog-shine)' rx='1000' />
+      <rect width='80' height='80' fill='url(#watchdog-grid)' rx='1000' />
       <g fill='white' opacity='0.4'>
         <path
           transform='translate(20, 20) scale(0.3)'
