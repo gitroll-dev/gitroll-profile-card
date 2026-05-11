@@ -1,7 +1,7 @@
 import { Rating } from './rating'
 
 
-export type DecorationType = 'kawaiiCat' | 'retro' | 'geometric' | 'none';
+export type DecorationType = 'kawaiiCat' | 'retro' | 'geometric' | 'custom' | 'none';
 export type BadgeDecorationType = 'watchdog' | 'none';
 
 export interface Theme {

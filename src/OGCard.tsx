@@ -1,6 +1,6 @@
 import React from 'react'
 import { Rating } from './rating'
-import { preset, type Theme } from './theme'
+import { preset, type Theme, type DecorationType, type BadgeDecorationType } from './theme'
 import { GitRollLogo } from './logo'
 import { WatchdogGradientDecoration, KawaiiCatDecoration, RetroThemeDecoration, GeometricDecoration, CustomDecoration } from './decorations'
 
@@ -31,8 +31,8 @@ export interface OGCardProps {
   regionalRank?: [string | number, string] | null
   campusRank?: [string | number, string] | null
   theme?: Theme
-  decoration?: string
-  badgeDecoration?: string
+  decoration?: DecorationType
+  badgeDecoration?: BadgeDecorationType
   decorationColor?: string
   badgeDecorationColor?: string
   customDecorationPath?: string
