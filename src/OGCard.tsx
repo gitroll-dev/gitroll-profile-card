@@ -1,7 +1,20 @@
+import React from 'react'
 import { Rating } from './rating'
-import { preset, type Theme } from './theme'
+import { preset, type Theme, type DecorationType, type BadgeDecorationType } from './theme'
 import { GitRollLogo } from './logo'
-import { WatchdogGradientDecoration, DarkEmeraldDecoration, KawaiiCatDecoration, RetroThemeDecoration } from './decorations'
+import { WatchdogGradientDecoration, KawaiiCatDecoration, RetroThemeDecoration, GeometricDecoration, CustomDecoration } from './decorations'
+
+
+const decorationMap: Record<string, React.FC<any>> = {
+  kawaiiCat: KawaiiCatDecoration,
+  retro: RetroThemeDecoration,
+  geometric: GeometricDecoration,
+  custom: CustomDecoration,
+}
+
+const badgeDecorationMap: Record<string, React.FC<any>> = {
+  watchdog: WatchdogGradientDecoration,
+}
 
 
 export interface OGCardProps {
@@ -15,9 +28,14 @@ export interface OGCardProps {
   securityScore: number
   maintainabilityScore: number
   contributor: boolean
-  regionalRank?: [ string | number, string ] | null
-  campusRank?: [ string | number, string ] | null
+  regionalRank?: [string | number, string] | null
+  campusRank?: [string | number, string] | null
   theme?: Theme
+  decoration?: DecorationType
+  badgeDecoration?: BadgeDecorationType
+  decorationColor?: string
+  badgeDecorationColor?: string
+  customDecorationPath?: string
 }
 
 export function OGCard({
@@ -27,8 +45,16 @@ export function OGCard({
   contributor,
   regionalRank, campusRank,
   theme = preset.light,
+  decoration,
+  badgeDecoration,
+  decorationColor,
+  badgeDecorationColor,
+  customDecorationPath,
 }: OGCardProps) {
   const bg = theme.badgeColors[overallRating] ?? theme.badgeColors[Rating.E]
+  const decColor = decorationColor || theme.barForeground
+  const badgeDecColor = badgeDecorationColor || bg
+  
   return (
     <div
       id='card-container'
@@ -44,11 +70,11 @@ export function OGCard({
         borderRadius: '10px',
       }}
     >
-      {theme === preset.kawaiiCat && (
-        <KawaiiCatDecoration color={theme.barForeground} />
-      )}
-      {theme === preset.retro && (
-        <RetroThemeDecoration color={theme.barForeground} />
+      {decoration && decorationMap[decoration] && (
+        React.createElement(decorationMap[decoration], { 
+          color: decColor,
+          path: decoration === 'custom' ? customDecorationPath : undefined
+        })
       )}
       <GitRollLogo fill={theme.logoColor} />
       <div
@@ -153,7 +179,12 @@ export function OGCard({
                 position: 'relative'
               }}
             >
-              {theme === preset.darkEmerald && (<DarkEmeraldDecoration color={bg} rating={overallRating}/>) || theme === preset.WatchdogGradient && (<WatchdogGradientDecoration color={bg} rating={overallRating}/>)}
+              {badgeDecoration && badgeDecorationMap[badgeDecoration] && (
+                React.createElement(badgeDecorationMap[badgeDecoration], { 
+                  color: badgeDecColor, 
+                  rating: overallRating,
+                })
+              )}
               <div
                 id='overall-rating'
                 style={{

@@ -14,6 +14,10 @@ interface WatchdogGradientDecorationProps {
   rating: string;
 }
 
+interface GeometricDecorationProps {
+  color: string;
+}
+
 export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
   return (
     <svg
@@ -89,7 +93,7 @@ export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
       {/* Retro-style grid background */}
       <defs>
         <pattern
-          id='retro-grid'
+          id='retro-theme-grid'
           width='40'
           height='40'
           patternUnits='userSpaceOnUse'
@@ -103,7 +107,7 @@ export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
           />
         </pattern>
       </defs>
-      <rect width='1200' height='675' fill='url(#retro-grid)' />
+      <rect width='1200' height='675' fill='url(#retro-theme-grid)' />
       {/* Stars */}
       <g fill={color} opacity='0.5'>
         {[
@@ -165,12 +169,12 @@ export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationPr
       }}
     >
       <defs>
-        <radialGradient id='shine' cx='0.3' cy='0.3' r='0.8'>
+        <radialGradient id='emerald-shine' cx='0.3' cy='0.3' r='0.8'>
           <stop offset='0%' stop-color={color} />
           <stop offset='100%' stop-color={endColor} />
         </radialGradient>
         <pattern
-          id='retro-grid'
+          id='emerald-grid'
           width='20'
           height='20'
           patternUnits='userSpaceOnUse'
@@ -184,8 +188,8 @@ export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationPr
           />
         </pattern>
       </defs>
-      <rect width='80' height='80' fill='url(#shine)' rx='1000' />
-      <rect width='80' height='80' fill='url(#retro-grid)' rx='1000' />
+      <rect width='80' height='80' fill='url(#emerald-shine)' rx='1000' />
+      <rect width='80' height='80' fill='url(#emerald-grid)' rx='1000' />
       <g fill='white' opacity='0.4'>
         <path
           transform='translate(20, 20) scale(0.3)'
@@ -200,6 +204,69 @@ export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationPr
   )
 }
 
+export function GeometricDecoration({ color }: GeometricDecorationProps) {
+  return (
+    <svg
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        overflow: 'visible',
+      }}
+    >
+      <g opacity='0.15'>
+        {/* Large Triangles */}
+        <path d='M-100 675 L200 300 L500 675 Z' fill={color} />
+        <path d='M1200 0 L900 300 L600 0 Z' fill={color} />
+
+        {/* Polygons */}
+        <path d='M1000 500 L1100 550 L1050 650 L950 600 Z' fill={color} />
+        <path d='M50 50 L150 30 L200 100 L100 120 Z' fill={color} />
+
+        {/* Scattered small triangles */}
+        {[
+          [300, 100], [800, 400], [500, 50], [1100, 150]
+        ].map(([x, y], i) => (
+          <path
+            key={i}
+            transform={`translate(${x}, ${y}) rotate(${i * 45})`}
+            d='M0 0 L20 40 L-20 40 Z'
+            fill={color}
+          />
+        ))}
+
+        {/* Circles */}
+        <circle cx='600' cy='337' r='150' stroke={color} strokeWidth='2' fill='none' />
+        <circle cx='600' cy='337' r='200' stroke={color} strokeWidth='1' fill='none' opacity='0.5' />
+      </g>
+    </svg>
+  )
+}
+
+export function CustomDecoration({ color, path }: { color: string; path: string }) {
+  if (!path) return null
+  return (
+    <svg
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 0,
+      }}
+    >
+      <path d={path} fill={color} fillOpacity='0.1' />
+    </svg>
+  )
+}
 export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDecorationProps) {
   let endColor=''
   switch(rating) {
@@ -233,12 +300,12 @@ export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDe
       }}
     >
       <defs>
-        <radialGradient id='shine' cx='0.3' cy='0.3' r='0.8'>
+        <radialGradient id='watchdog-shine' cx='0.3' cy='0.3' r='0.8'>
           <stop offset='0%' stop-color={color} />
           <stop offset='100%' stop-color={endColor} />
         </radialGradient>
         <pattern
-          id='retro-grid'
+          id='watchdog-grid'
           width='20'
           height='20'
           patternUnits='userSpaceOnUse'
@@ -252,8 +319,8 @@ export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDe
           />
         </pattern>
       </defs>
-      <rect width='80' height='80' fill='url(#shine)' rx='1000' />
-      <rect width='80' height='80' fill='url(#retro-grid)' rx='1000' />
+      <rect width='80' height='80' fill='url(#watchdog-shine)' rx='1000' />
+      <rect width='80' height='80' fill='url(#watchdog-grid)' rx='1000' />
       <g fill='white' opacity='0.4'>
         <path
           transform='translate(20, 20) scale(0.3)'
