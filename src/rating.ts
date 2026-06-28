@@ -1,3 +1,4 @@
+/** Letter grade for a profile, S (best) down to E (worst). */
 export enum Rating {
   S = 'S',
   A = 'A',
