@@ -1,5 +1,38 @@
 # @gitroll/profile-card
 
+## Unreleased
+
+### Added
+
+- **66 new themes** (79 total), each in its own file under `src/themes/`,
+  collected by `index.ts` + `preset.ts` for scalability. All colors are
+  satori-safe hex/rgb.
+- **`decoration` support** — apply a full-card overlay to _any_ theme via the
+  `OGCard` `decoration` prop, the playground `?decoration=` query param, or
+  `--decoration` on the CLI (validated against the known set).
+- **Four new decorations**: `confetti`, `bubbles`, `circuit`, `sunburst`
+  (alongside `kawaiiCat` and `retro`).
+- Playground theme + decoration pickers with live per-tile previews, `?theme=`
+  / `?decoration=` URL state, an active-decoration pill, and SVG download.
+- `Rating` and the decorations are now exported from the package entry point.
+
+### Changed
+
+- Decorations are fully decoupled from themes — no more `theme === preset.x`
+  coupling; gradient backgrounds are detected generically.
+- `theme.ts` reduced to the `Theme` interface plus re-exports.
+- Redesigned playground (dark UI, theme/decoration tile grids).
+- Added JSDoc across the source files (`OGCard`, `theme`, `decorations`,
+  `rating`, `logo`).
+
+### Fixed
+
+- CLI grid mode (`--grid`) typing for the full `Rating` range (added `E`).
+
+### Removed
+
+- Per-badge decorations (`DarkEmeraldDecoration`, `WatchdogGradientDecoration`).
+
 ## 0.3.0
 
 ### Minor Changes

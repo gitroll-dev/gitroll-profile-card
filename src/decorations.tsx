@@ -1,20 +1,19 @@
-interface KawaiiCatDecorationProps {
+/**
+ * Decorations are full-card SVG overlays (1200×675) that sit behind the card
+ * content. They are independent of themes: any decoration can be applied to
+ * any theme via the `decoration` prop / `?decoration=` query param.
+ *
+ * To add one: write a component taking {@link DecorationProps}, then register
+ * it in {@link decorations} under the key used by the param.
+ */
+
+export interface DecorationProps {
+  /** Accent color for the decoration, typically the theme's `barForeground`. */
   color: string;
-}
-interface RetroThemeDecorationProps {
-  color: string;
-}
-interface DarkEmeraldDecorationProps {
-  color: string;
-  rating: string;
 }
 
-interface WatchdogGradientDecorationProps {
-  color: string;
-  rating: string;
-}
-
-export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
+/** Paw prints, stars and a dashed border. */
+export function KawaiiCatDecoration({ color }: DecorationProps) {
   return (
     <svg
       width='1200'
@@ -72,7 +71,8 @@ export function KawaiiCatDecoration({ color }: KawaiiCatDecorationProps) {
   )
 }
 
-export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
+/** Retro grid background with stars and a dashed border. */
+export function RetroThemeDecoration({ color }: DecorationProps) {
   return (
     <svg
       width='1200'
@@ -132,138 +132,121 @@ export function RetroThemeDecoration({ color }: RetroThemeDecorationProps) {
   )
 }
 
-export function DarkEmeraldDecoration({ color, rating }: DarkEmeraldDecorationProps) {
-  let endColor=''
-  switch(rating) {
-    case 'S':
-      endColor = '#1e1b4b'
-      break
-    case 'A':
-      endColor = '#052e16'
-      break
-    case 'B':
-      endColor = '#1a2e05'
-      break
-    case 'C':
-      endColor = '#431407'
-      break
-    case 'D':
-      endColor = '#450a0a'
-      break
-    default:
-      endColor = '#030712'
-      break
-  }
+/** Diagonal confetti dashes scattered across the card. */
+export function ConfettiDecoration({ color }: DecorationProps) {
+  const pieces = [
+    [140, 120, 18], [320, 80, -32], [520, 150, 12], [760, 90, 40],
+    [980, 130, -18], [1080, 260, 28], [90, 320, -40], [1120, 440, 16],
+    [180, 540, 34], [430, 600, -22], [690, 560, 20], [930, 600, -36],
+  ]
   return (
     <svg
-      width='80'
-      height='80'
-      viewBox='0 0 80 80'
-      xmlns='http://www.w3.org/2000/svg'
-      style={{
-        position: 'absolute'
-      }}
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
     >
-      <defs>
-        <radialGradient id='shine' cx='0.3' cy='0.3' r='0.8'>
-          <stop offset='0%' stop-color={color} />
-          <stop offset='100%' stop-color={endColor} />
-        </radialGradient>
-        <pattern
-          id='retro-grid'
-          width='20'
-          height='20'
-          patternUnits='userSpaceOnUse'
-        >
-          <path
-            d='M 20 0 L 0 0 0 20'
-            fill='none'
-            stroke='white'
-            stroke-width='0.5'
-            opacity='0.2'
+      <g opacity='0.5'>
+        {pieces.map(([x, y, r], i) => (
+          <rect
+            key={i}
+            x={x}
+            y={y}
+            width='10'
+            height='26'
+            rx='5'
+            fill={color}
+            transform={`rotate(${r} ${x + 5} ${y + 13})`}
           />
-        </pattern>
-      </defs>
-      <rect width='80' height='80' fill='url(#shine)' rx='1000' />
-      <rect width='80' height='80' fill='url(#retro-grid)' rx='1000' />
-      <g fill='white' opacity='0.4'>
-        <path
-          transform='translate(20, 20) scale(0.3)'
-          d='M10 0 L13 7 L21 7 L15 13 L17 21 L10 17 L3 21 L5 13 L-1 7 L7 7Z'
-        />
-        <path
-          transform='translate(60, 25) scale(0.25)'
-          d='M10 0 L13 7 L21 7 L15 13 L17 21 L10 17 L3 21 L5 13 L-1 7 L7 7Z'
-        />
+        ))}
       </g>
     </svg>
   )
 }
 
-export function WatchdogGradientDecoration({ color, rating }: WatchdogGradientDecorationProps) {
-  let endColor=''
-  switch(rating) {
-    case 'S':
-      endColor = '#1e1b4b'
-      break
-    case 'A':
-      endColor = '#052e16'
-      break
-    case 'B':
-      endColor = '#1a2e05'
-      break
-    case 'C':
-      endColor = '#431407'
-      break
-    case 'D':
-      endColor = '#450a0a'
-      break
-    default:
-      endColor = '#030712'
-      break
-  }
+/** Soft floating bubbles of varying size. */
+export function BubblesDecoration({ color }: DecorationProps) {
+  const bubbles = [
+    [130, 140, 46], [300, 520, 70], [560, 110, 32], [620, 600, 24],
+    [840, 180, 58], [1030, 120, 38], [1100, 470, 64], [200, 360, 20],
+    [980, 560, 28], [430, 250, 16],
+  ]
   return (
     <svg
-      width='80'
-      height='80'
-      viewBox='0 0 80 80'
-      xmlns='http://www.w3.org/2000/svg'
-      style={{
-        position: 'absolute'
-      }}
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
     >
-      <defs>
-        <radialGradient id='shine' cx='0.3' cy='0.3' r='0.8'>
-          <stop offset='0%' stop-color={color} />
-          <stop offset='100%' stop-color={endColor} />
-        </radialGradient>
-        <pattern
-          id='retro-grid'
-          width='20'
-          height='20'
-          patternUnits='userSpaceOnUse'
-        >
-          <path
-            d='M 20 0 L 0 0 0 20'
-            fill='none'
-            stroke='white'
-            stroke-width='0.5'
-            opacity='0.2'
-          />
-        </pattern>
-      </defs>
-      <rect width='80' height='80' fill='url(#shine)' rx='1000' />
-      <rect width='80' height='80' fill='url(#retro-grid)' rx='1000' />
-      <g fill='white' opacity='0.4'>
-        <path
-          transform='translate(20, 20) scale(0.3)'
-          d='M10 0 L13 7 L21 7 L15 13 L17 21 L10 17 L3 21 L5 13 L-1 7 L7 7Z'
-        />
-        <path
-          transform='translate(60, 25) scale(0.25)'
-          d='M10 0 L13 7 L21 7 L15 13 L17 21 L10 17 L3 21 L5 13 L-1 7 L7 7Z'
-        />
+      <g fill='none' stroke={color} strokeWidth='2' opacity='0.35'>
+        {bubbles.map(([cx, cy, r], i) => (
+          <circle key={i} cx={cx} cy={cy} r={r} />
+        ))}
       </g>
     </svg>
   )
 }
+
+/** Tech circuit-board traces with node dots. */
+export function CircuitDecoration({ color }: DecorationProps) {
+  return (
+    <svg
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
+    >
+      <g stroke={color} strokeWidth='2' fill='none' opacity='0.28'>
+        <path d='M0 110 H220 L260 150 H520' />
+        <path d='M1200 90 H980 L940 130 H720' />
+        <path d='M0 560 H180 L220 520 H460' />
+        <path d='M1200 600 H1000 L960 560 H780' />
+        <path d='M600 0 V160 M600 520 V675' />
+        <path d='M320 0 V70 L360 110 V200' />
+        <path d='M880 675 V600 L840 560 V470' />
+      </g>
+      <g fill={color} opacity='0.5'>
+        {[[520, 150], [720, 130], [460, 520], [780, 560], [600, 160], [600, 520], [360, 200], [840, 470]].map(([cx, cy], i) => (
+          <circle key={i} cx={cx} cy={cy} r='6' />
+        ))}
+      </g>
+    </svg>
+  )
+}
+
+/** Concentric corner rays radiating from the top-left. */
+export function SunburstDecoration({ color }: DecorationProps) {
+  return (
+    <svg
+      width='1200'
+      height='675'
+      viewBox='0 0 1200 675'
+      style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
+    >
+      <g stroke={color} fill='none' opacity='0.2'>
+        {[120, 240, 360, 480, 600].map((r, i) => (
+          <circle key={i} cx='0' cy='0' r={r} strokeWidth='2' />
+        ))}
+      </g>
+      <g stroke={color} strokeWidth='2' opacity='0.18'>
+        {[0, 12, 24, 36, 48, 60, 72, 84].map((deg, i) => {
+          const rad = (deg * Math.PI) / 180
+          return <line key={i} x1='0' y1='0' x2={680 * Math.cos(rad)} y2={680 * Math.sin(rad)} />
+        })}
+      </g>
+    </svg>
+  )
+}
+
+/** Registry of decorations, keyed by the `decoration` param value. */
+export const decorations = {
+  kawaiiCat: KawaiiCatDecoration,
+  retro: RetroThemeDecoration,
+  confetti: ConfettiDecoration,
+  bubbles: BubblesDecoration,
+  circuit: CircuitDecoration,
+  sunburst: SunburstDecoration,
+} satisfies Record<string, (props: DecorationProps) => JSX.Element>
+
+/** Valid `decoration` values, e.g. `'kawaiiCat' | 'retro'`. */
+export type DecorationName = keyof typeof decorations

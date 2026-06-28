@@ -1,20 +1,306 @@
-body {
-  margin: 0;
-  padding: 0;
+:root {
+  --bg: #0b0c10;
+  --bg-elev: #14161c;
+  --bg-elev-2: #1b1e26;
+  --bg-input: #0f1117;
+  --border: #262a35;
+  --border-soft: #1f232c;
+  --text: #e8eaf0;
+  --text-soft: #9aa0ad;
+  --text-faint: #6b7280;
+  --accent: #6366f1;
+  --accent-soft: rgba(99, 102, 241, 0.15);
+  --accent-strong: #818cf8;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
   box-sizing: border-box;
 }
 
-input, select {
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  background: var(--bg) !important;
+  min-height: 100vh;
+}
+
+input,
+select,
+button {
   font-family: inherit;
 }
 
-label {
-  font-weight: 500;
-  color: #4a4a4a;
+/* Form controls -------------------------------------------------- */
+.field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-soft);
 }
 
-input:focus, select:focus {
-  border-color: #0066ff !important;
+.text-input,
+.select-input {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text);
+  font-size: 0.9rem;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0,102,255,0.1);
-} 
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.select-input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa0ad' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  padding-right: 2rem;
+}
+
+.text-input:focus,
+.select-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.select-input option {
+  background: var(--bg-elev-2);
+  color: var(--text);
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  opacity: 0.4;
+}
+
+/* Color input ---------------------------------------------------- */
+.color-swatch {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: transparent;
+}
+.color-swatch::-webkit-color-swatch-wrapper {
+  padding: 3px;
+}
+.color-swatch::-webkit-color-swatch {
+  border: none;
+  border-radius: 5px;
+}
+
+/* Scrollbar ------------------------------------------------------ */
+.scroll-area::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+  border: 2px solid var(--bg);
+}
+.scroll-area::-webkit-scrollbar-thumb:hover {
+  background: #333845;
+}
+
+/* Theme tiles ---------------------------------------------------- */
+.theme-tile {
+  position: relative;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+.theme-tile:hover {
+  transform: translateY(-2px);
+  border-color: #3a3f4d;
+}
+.theme-tile.active {
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+/* Decoration preview: force the overlay's SVG to fill the tile via its
+   viewBox, regardless of the inline width/height/position it carries. */
+.deco-preview {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.deco-preview svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.theme-tile-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 0.66rem;
+  font-weight: 600;
+  padding: 3px 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  backdrop-filter: blur(2px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Buttons / chips ------------------------------------------------ */
+.seg {
+  display: inline-flex;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
+}
+.seg button {
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.seg button.on {
+  background: var(--accent);
+  color: #fff;
+}
+
+.ghost-btn {
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ghost-btn:hover {
+  background: var(--bg-elev-2);
+  border-color: #3a3f4d;
+}
+.ghost-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.ghost-btn:disabled:hover {
+  background: var(--bg-input);
+  border-color: var(--border);
+}
+.ghost-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.ghost-btn.primary:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+}
+
+@media (max-width: 640px) {
+  .hide-sm {
+    display: none;
+  }
+}
+
+.toggle {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.toggle.on {
+  background: var(--accent);
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s;
+}
+.toggle.on::after {
+  transform: translateX(18px);
+}
+
+/* Section (flat, divider-based — no accordion) ------------------- */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+.section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.section-hint {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-faint);
+}
+.section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

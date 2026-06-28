@@ -6,10 +6,12 @@ import sharp from 'sharp'
 import { OGCard, OGCardProps } from '../src/OGCard'
 import { Rating } from '../src/rating'
 import { preset } from '../src/theme'
+import { decorations, type DecorationName } from '../src/decorations'
 
 
 interface CliOptions {
   theme?: keyof typeof preset;
+  decoration?: DecorationName;
   output?: string;
   user?: string;
   avatar?: string;
@@ -29,6 +31,15 @@ function parseArgs(): CliOptions {
       case '--theme':
       case '-t': {
         options.theme = args[++i] as keyof typeof preset
+        break
+      }
+      case '--decoration': {
+        const name = args[++i]
+        if (!(name in decorations)) {
+          console.error(`Error: Unknown decoration "${name}". Available: ${Object.keys(decorations).join(', ')}`)
+          process.exit(1)
+        }
+        options.decoration = name as DecorationName
         break
       }
       case '--output':
@@ -97,7 +108,8 @@ function printHelp() {
 Usage: generate [options]
 
 Options:
-  -t, --theme <theme>      Theme to use (light/dark)
+  -t, --theme <theme>      Theme to use (e.g. light, dark, catppuccinDark)
+      --decoration <name>  Overlay decoration (${Object.keys(decorations).join(', ')})
   -o, --output <file>      Output file path (defaults to stdout)
   -u, --user <username>    GitHub username
   -a, --avatar <url>       Avatar URL
@@ -145,20 +157,22 @@ async function generateNoticeCard() {
 }
 
 async function generateGrid(baseProps: OGCardProps) {
-  const ratings = [Rating.S, Rating.A, Rating.B, Rating.C, Rating.D]
-  const scores = {
+  const ratings: Rating[] = [Rating.S, Rating.A, Rating.B, Rating.C, Rating.D]
+  const scores: Record<Rating, string> = {
     [Rating.S]: '9.00',
     [Rating.A]: '7.50',
     [Rating.B]: '6.00',
     [Rating.C]: '4.50',
     [Rating.D]: '3.00',
+    [Rating.E]: '1.50',
   }
-  const cdfs = {
+  const cdfs: Record<Rating, string> = {
     [Rating.S]: '99',
     [Rating.A]: '85',
     [Rating.B]: '65',
     [Rating.C]: '35',
     [Rating.D]: '15',
+    [Rating.E]: '5',
   }
 
   // Generate all rating cards
@@ -229,6 +243,7 @@ async function main() {
     regionalRank: [1, 'TW'] as [number, string],
     campusRank: [10, 'ntnu'] as [number, string],
     theme: preset[options.theme as keyof typeof preset] || preset.light,
+    decoration: options.decoration ?? null,
     overallScore: '9.05',
     overallScoreCDF: '99',
     overallRating: Rating.S,

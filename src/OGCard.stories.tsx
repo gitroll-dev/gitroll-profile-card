@@ -98,3 +98,20 @@ export const Dracula: Story = {
   },
 }
 
+// Decorations are theme-independent: any decoration works on any theme.
+export const KawaiiCatDecoration: Story = {
+  args: {
+    ...baseProps,
+    theme: preset.kawaiiCat,
+    decoration: 'kawaiiCat',
+  },
+}
+
+export const RetroDecorationOnDark: Story = {
+  args: {
+    ...baseProps,
+    theme: preset.dark,
+    decoration: 'retro',
+  },
+}
+
